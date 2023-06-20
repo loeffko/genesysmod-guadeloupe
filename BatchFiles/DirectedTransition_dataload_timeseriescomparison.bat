@@ -1,0 +1,8 @@
+cd ..
+gams genesysmod.gms -gdxCompress=1 --emissionPathway=DirectedTransition --emissionspenalty=1000 --solver=gurobi --switch_test_data_load=1 -gdx=DT_dataload_1000_sm --elmod_nthhour=1000 --elmod_hour_steps=4 --threads=2 -o=BatchFiles\Logs\DT_dataload.log --Info=DT_dataload
+gams genesysmod.gms -gdxCompress=1 --emissionPathway=DirectedTransition --emissionspenalty=1000 --solver=gurobi --switch_test_data_load=1 -gdx=DT_dataload_788_sm --elmod_nthhour=788 --elmod_hour_steps=4 --threads=2 -o=BatchFiles\Logs\DT_dataload.log --Info=DT_dataload
+gams genesysmod.gms -gdxCompress=1 --emissionPathway=DirectedTransition --emissionspenalty=1000 --solver=gurobi --switch_test_data_load=1 -gdx=DT_dataload_484_sm --elmod_nthhour=484 --elmod_hour_steps=4 --threads=2 -o=BatchFiles\Logs\DT_dataload.log --Info=DT_dataload
+gams genesysmod.gms -gdxCompress=1 --emissionPathway=DirectedTransition --emissionspenalty=1000 --solver=gurobi --switch_test_data_load=1 -gdx=DT_dataload_244_sm --elmod_nthhour=244 --elmod_hour_steps=4 --threads=2 -o=BatchFiles\Logs\DT_dataload.log --Info=DT_dataload
+gams genesysmod.gms -gdxCompress=1 --emissionPathway=DirectedTransition --emissionspenalty=1000 --solver=gurobi --switch_test_data_load=1 -gdx=DT_dataload_122_sm --elmod_nthhour=122 --elmod_hour_steps=4 --threads=2 -o=BatchFiles\Logs\DT_dataload.log --Info=DT_dataload
+gams genesysmod.gms -gdxCompress=1 --emissionPathway=DirectedTransition --emissionspenalty=1000 --solver=gurobi --switch_test_data_load=1 -gdx=DT_dataload_73_sm --elmod_nthhour=73 --elmod_hour_steps=4 --threads=2 -o=BatchFiles\Logs\DT_dataload.log --Info=DT_dataload
+pause
