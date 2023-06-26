@@ -67,15 +67,15 @@ $if not set set_peaking_minrun_share     $setglobal set_peaking_minrun_share 0.1
 
 
 $if not set solver                       $setglobal solver gurobi
-$if not set model_region                 $setglobal model_region europe
-$if not set data_base_region             $setglobal data_base_region DE
+$if not set model_region                 $setglobal model_region guadeloupe
+$if not set data_base_region             $setglobal data_base_region GrandeTerre
 $if not set global_data_file             $setglobal global_data_file Global_Data_v13_oE_kl_26_04_2022
 $if not set data_file                    $setglobal data_file Data_Europe_openENTRANCE_technoFriendly_oE_v55_kl_20_06_2022
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
 $if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Europe_v12_kl_20_04_2022
 $if not set threads                      $setglobal threads 4
 $if not set timeseries                   $setglobal timeseries elmod
-$if not set elmod_nthhour                $setglobal elmod_nthhour 788
+$if not set elmod_nthhour                $setglobal elmod_nthhour 484
 $if not set elmod_starthour              $setglobal elmod_starthour 8
 $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
 
@@ -100,13 +100,6 @@ $endif
 
 option dnlp = conopt;
 
-***
-*** Here, the data files for various pathway runs are defined
-***
-$if %emissionPathway% == "SocietalCommitment" $setglobal data_file Data_Europe_openENTRANCE_SocietalCommitment_oE_v43_kl_20_06_2022
-$if %emissionPathway% == "TechnoFriendly" $setglobal data_file Data_Europe_openENTRANCE_technoFriendly_oE_v55_kl_20_06_2022
-$if %emissionPathway% == "DirectedTransition" $setglobal data_file Data_Europe_openENTRANCE_DirectedTransition_oE_v40_kl_20_06_2022
-$if %emissionPathway% == "GradualDevelopment" $setglobal data_file Data_Europe_openENTRANCE_GradualDevelopment_oE_v42_kl_20_06_2022
 
 *
 * ####### Declarations #############
