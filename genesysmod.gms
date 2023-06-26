@@ -47,7 +47,7 @@ $if not set switch_aggregate_region      $setglobal switch_aggregate_region 0
 $if not set switch_intertemporal         $setglobal switch_intertemporal 0
 $if not set switch_weighted_emissions    $setglobal switch_weighted_emissions 1
 $if not set switch_employment_calculation $setglobal switch_employment_calculation 0
-$if not set switch_test_data_load        $setglobal switch_test_data_load 0
+$if not set switch_test_data_load        $setglobal switch_test_data_load 1
 $if not set switch_only_write_results    $setglobal switch_only_write_results 0
 
 $if not set set_symmetric_transmission   $setglobal set_symmetric_transmission 0.85
