@@ -1,0 +1,6 @@
+GdxFiles/
+TempFiles/
+*.~gm
+*.log
+*.lst
+*.lxi
