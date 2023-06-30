@@ -1,0 +1,226 @@
+coords,lat,lon,ISO_Code,region,NAME
+"16.225, -61.55",16.225,-61.55,GP0101,Baie-Mahault,CapExcellence
+"16.225, -61.625",16.225,-61.625,GP0101,Baie-Mahault,CapExcellence
+"16.25, -61.575",16.25,-61.575,GP0101,Baie-Mahault,CapExcellence
+"16.25, -61.6",16.25,-61.6,GP0101,Baie-Mahault,CapExcellence
+"16.25, -61.625",16.25,-61.625,GP0101,Baie-Mahault,CapExcellence
+"16.275, -61.575",16.275,-61.575,GP0101,Baie-Mahault,CapExcellence
+"16.275, -61.6",16.275,-61.6,GP0101,Baie-Mahault,CapExcellence
+"16.025, -61.725",16.025,-61.725,GP0102,Baillif,GrandSud
+"16.05, -61.725",16.05,-61.725,GP0102,Baillif,GrandSud
+"16.075, -61.7",16.075,-61.7,GP0102,Baillif,GrandSud
+"16, -61.725",16,-61.725,GP0103,Basse-Terre,GrandSud
+"16.125, -61.75",16.125,-61.75,GP0104,Bouillante,GrandSud
+"16.15, -61.75",16.15,-61.75,GP0104,Bouillante,GrandSud
+"16.15, -61.775",16.15,-61.775,GP0104,Bouillante,GrandSud
+"16.175, -61.75",16.175,-61.75,GP0104,Bouillante,GrandSud
+"16.175, -61.775",16.175,-61.775,GP0104,Bouillante,GrandSud
+"16.025, -61.575",16.025,-61.575,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.025, -61.6",16.025,-61.6,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.025, -61.625",16.025,-61.625,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.05, -61.575",16.05,-61.575,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.05, -61.6",16.05,-61.6,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.05, -61.625",16.05,-61.625,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.05, -61.65",16.05,-61.65,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.075, -61.575",16.075,-61.575,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.075, -61.6",16.075,-61.6,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.075, -61.625",16.075,-61.625,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.075, -61.65",16.075,-61.65,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.075, -61.675",16.075,-61.675,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.1, -61.575",16.1,-61.575,GP0105,Capesterre-Belle-Eau,GrandSud
+"16.275, -61.775",16.275,-61.775,GP0106,Deshaies,BasseTerreNorth
+"16.275, -61.8",16.275,-61.8,GP0106,Deshaies,BasseTerreNorth
+"16.3, -61.775",16.3,-61.775,GP0106,Deshaies,BasseTerreNorth
+"16.3, -61.8",16.3,-61.8,GP0106,Deshaies,BasseTerreNorth
+"16.325, -61.775",16.325,-61.775,GP0106,Deshaies,BasseTerreNorth
+"15.975, -61.7",15.975,-61.7,GP0107,Gourbeyre,GrandSud
+"16, -61.675",16,-61.675,GP0107,Gourbeyre,GrandSud
+"16, -61.7",16,-61.7,GP0107,Gourbeyre,GrandSud
+"16.1, -61.6",16.1,-61.6,GP0108,Goyave,BasseTerreNorth
+"16.1, -61.625",16.1,-61.625,GP0108,Goyave,BasseTerreNorth
+"16.1, -61.65",16.1,-61.65,GP0108,Goyave,BasseTerreNorth
+"16.125, -61.575",16.125,-61.575,GP0108,Goyave,BasseTerreNorth
+"16.125, -61.6",16.125,-61.6,GP0108,Goyave,BasseTerreNorth
+"16.125, -61.625",16.125,-61.625,GP0108,Goyave,BasseTerreNorth
+"16.125, -61.65",16.125,-61.65,GP0108,Goyave,BasseTerreNorth
+"16.15, -61.6",16.15,-61.6,GP0108,Goyave,BasseTerreNorth
+"16.2, -61.7",16.2,-61.7,GP0109,Lamentin,BasseTerreNorth
+"16.2, -61.725",16.2,-61.725,GP0109,Lamentin,BasseTerreNorth
+"16.225, -61.65",16.225,-61.65,GP0109,Lamentin,BasseTerreNorth
+"16.225, -61.675",16.225,-61.675,GP0109,Lamentin,BasseTerreNorth
+"16.225, -61.7",16.225,-61.7,GP0109,Lamentin,BasseTerreNorth
+"16.25, -61.65",16.25,-61.65,GP0109,Lamentin,BasseTerreNorth
+"16.275, -61.625",16.275,-61.625,GP0109,Lamentin,BasseTerreNorth
+"16.275, -61.65",16.275,-61.65,GP0109,Lamentin,BasseTerreNorth
+"16.125, -61.675",16.125,-61.675,GP0110,Petit-Bourg,BasseTerreNorth
+"16.125, -61.7",16.125,-61.7,GP0110,Petit-Bourg,BasseTerreNorth
+"16.15, -61.625",16.15,-61.625,GP0110,Petit-Bourg,BasseTerreNorth
+"16.15, -61.65",16.15,-61.65,GP0110,Petit-Bourg,BasseTerreNorth
+"16.15, -61.675",16.15,-61.675,GP0110,Petit-Bourg,BasseTerreNorth
+"16.15, -61.7",16.15,-61.7,GP0110,Petit-Bourg,BasseTerreNorth
+"16.15, -61.725",16.15,-61.725,GP0110,Petit-Bourg,BasseTerreNorth
+"16.175, -61.6",16.175,-61.6,GP0110,Petit-Bourg,BasseTerreNorth
+"16.175, -61.625",16.175,-61.625,GP0110,Petit-Bourg,BasseTerreNorth
+"16.175, -61.65",16.175,-61.65,GP0110,Petit-Bourg,BasseTerreNorth
+"16.175, -61.675",16.175,-61.675,GP0110,Petit-Bourg,BasseTerreNorth
+"16.175, -61.7",16.175,-61.7,GP0110,Petit-Bourg,BasseTerreNorth
+"16.175, -61.725",16.175,-61.725,GP0110,Petit-Bourg,BasseTerreNorth
+"16.2, -61.6",16.2,-61.6,GP0110,Petit-Bourg,BasseTerreNorth
+"16.2, -61.625",16.2,-61.625,GP0110,Petit-Bourg,BasseTerreNorth
+"16.2, -61.65",16.2,-61.65,GP0110,Petit-Bourg,BasseTerreNorth
+"16.2, -61.675",16.2,-61.675,GP0110,Petit-Bourg,BasseTerreNorth
+"16.225, -61.6",16.225,-61.6,GP0110,Petit-Bourg,BasseTerreNorth
+"16.2, -61.75",16.2,-61.75,GP0111,Pointe-Noire,BasseTerreNorth
+"16.2, -61.775",16.2,-61.775,GP0111,Pointe-Noire,BasseTerreNorth
+"16.225, -61.725",16.225,-61.725,GP0111,Pointe-Noire,BasseTerreNorth
+"16.225, -61.75",16.225,-61.75,GP0111,Pointe-Noire,BasseTerreNorth
+"16.225, -61.775",16.225,-61.775,GP0111,Pointe-Noire,BasseTerreNorth
+"16.25, -61.75",16.25,-61.75,GP0111,Pointe-Noire,BasseTerreNorth
+"16.25, -61.775",16.25,-61.775,GP0111,Pointe-Noire,BasseTerreNorth
+"16.25, -61.8",16.25,-61.8,GP0111,Pointe-Noire,BasseTerreNorth
+"16.025, -61.675",16.025,-61.675,GP0112,Saint-Claude,GrandSud
+"16.025, -61.7",16.025,-61.7,GP0112,Saint-Claude,GrandSud
+"16.05, -61.675",16.05,-61.675,GP0112,Saint-Claude,GrandSud
+"16.05, -61.7",16.05,-61.7,GP0112,Saint-Claude,GrandSud
+"16.25, -61.675",16.25,-61.675,GP0113,Sainte-Rose,BasseTerreNorth
+"16.25, -61.7",16.25,-61.7,GP0113,Sainte-Rose,BasseTerreNorth
+"16.25, -61.725",16.25,-61.725,GP0113,Sainte-Rose,BasseTerreNorth
+"16.275, -61.675",16.275,-61.675,GP0113,Sainte-Rose,BasseTerreNorth
+"16.275, -61.7",16.275,-61.7,GP0113,Sainte-Rose,BasseTerreNorth
+"16.275, -61.725",16.275,-61.725,GP0113,Sainte-Rose,BasseTerreNorth
+"16.275, -61.75",16.275,-61.75,GP0113,Sainte-Rose,BasseTerreNorth
+"16.3, -61.625",16.3,-61.625,GP0113,Sainte-Rose,BasseTerreNorth
+"16.3, -61.65",16.3,-61.65,GP0113,Sainte-Rose,BasseTerreNorth
+"16.3, -61.675",16.3,-61.675,GP0113,Sainte-Rose,BasseTerreNorth
+"16.3, -61.7",16.3,-61.7,GP0113,Sainte-Rose,BasseTerreNorth
+"16.3, -61.725",16.3,-61.725,GP0113,Sainte-Rose,BasseTerreNorth
+"16.3, -61.75",16.3,-61.75,GP0113,Sainte-Rose,BasseTerreNorth
+"16.325, -61.675",16.325,-61.675,GP0113,Sainte-Rose,BasseTerreNorth
+"16.325, -61.7",16.325,-61.7,GP0113,Sainte-Rose,BasseTerreNorth
+"16.325, -61.725",16.325,-61.725,GP0113,Sainte-Rose,BasseTerreNorth
+"16.325, -61.75",16.325,-61.75,GP0113,Sainte-Rose,BasseTerreNorth
+"16.35, -61.725",16.35,-61.725,GP0113,Sainte-Rose,BasseTerreNorth
+"16.35, -61.75",16.35,-61.75,GP0113,Sainte-Rose,BasseTerreNorth
+"15.85, -61.625",15.85,-61.625,GP0114,Terre-De-Bas,MinorIslands
+"15.875, -61.575",15.875,-61.575,GP0115,Terre-De-Haut,MinorIslands
+"15.975, -61.625",15.975,-61.625,GP0116,Trois-Rivières,GrandSud
+"15.975, -61.65",15.975,-61.65,GP0116,Trois-Rivières,GrandSud
+"15.975, -61.675",15.975,-61.675,GP0116,Trois-Rivières,GrandSud
+"16, -61.625",16,-61.625,GP0116,Trois-Rivières,GrandSud
+"16, -61.65",16,-61.65,GP0116,Trois-Rivières,GrandSud
+"16.025, -61.65",16.025,-61.65,GP0116,Trois-Rivières,GrandSud
+"15.95, -61.7",15.95,-61.7,GP0117,Vieux-Fort,GrandSud
+"16.05, -61.75",16.05,-61.75,GP0118,Vieux-Habitants,GrandSud
+"16.075, -61.725",16.075,-61.725,GP0118,Vieux-Habitants,GrandSud
+"16.075, -61.75",16.075,-61.75,GP0118,Vieux-Habitants,GrandSud
+"16.1, -61.675",16.1,-61.675,GP0118,Vieux-Habitants,GrandSud
+"16.1, -61.7",16.1,-61.7,GP0118,Vieux-Habitants,GrandSud
+"16.1, -61.725",16.1,-61.725,GP0118,Vieux-Habitants,GrandSud
+"16.1, -61.75",16.1,-61.75,GP0118,Vieux-Habitants,GrandSud
+"16.125, -61.725",16.125,-61.725,GP0118,Vieux-Habitants,GrandSud
+"16.425, -61.425",16.425,-61.425,GP0201,Anse-Bertrand,GrandeTerreNorth
+"16.45, -61.425",16.45,-61.425,GP0201,Anse-Bertrand,GrandeTerreNorth
+"16.45, -61.475",16.45,-61.475,GP0201,Anse-Bertrand,GrandeTerreNorth
+"16.45, -61.5",16.45,-61.5,GP0201,Anse-Bertrand,GrandeTerreNorth
+"16.475, -61.425",16.475,-61.425,GP0201,Anse-Bertrand,GrandeTerreNorth
+"16.475, -61.45",16.475,-61.45,GP0201,Anse-Bertrand,GrandeTerreNorth
+"16.475, -61.475",16.475,-61.475,GP0201,Anse-Bertrand,GrandeTerreNorth
+"16.475, -61.5",16.475,-61.5,GP0201,Anse-Bertrand,GrandeTerreNorth
+"16.5, -61.475",16.5,-61.475,GP0201,Anse-Bertrand,GrandeTerreNorth
+"15.875, -61.25",15.875,-61.25,GP0202,Capesterre-de-Marie-Galante,MarieGalante
+"15.9, -61.225",15.9,-61.225,GP0202,Capesterre-de-Marie-Galante,MarieGalante
+"15.9, -61.25",15.9,-61.25,GP0202,Capesterre-de-Marie-Galante,MarieGalante
+"15.925, -61.2",15.925,-61.2,GP0202,Capesterre-de-Marie-Galante,MarieGalante
+"15.925, -61.225",15.925,-61.225,GP0202,Capesterre-de-Marie-Galante,MarieGalante
+"15.925, -61.25",15.925,-61.25,GP0202,Capesterre-de-Marie-Galante,MarieGalante
+"15.95, -61.225",15.95,-61.225,GP0202,Capesterre-de-Marie-Galante,MarieGalante
+"15.875, -61.275",15.875,-61.275,GP0203,Grand-Bourg,MarieGalante
+"15.875, -61.3",15.875,-61.3,GP0203,Grand-Bourg,MarieGalante
+"15.9, -61.275",15.9,-61.275,GP0203,Grand-Bourg,MarieGalante
+"15.9, -61.3",15.9,-61.3,GP0203,Grand-Bourg,MarieGalante
+"15.9, -61.325",15.9,-61.325,GP0203,Grand-Bourg,MarieGalante
+"15.925, -61.275",15.925,-61.275,GP0203,Grand-Bourg,MarieGalante
+"15.925, -61.3",15.925,-61.3,GP0203,Grand-Bourg,MarieGalante
+"15.925, -61.325",15.925,-61.325,GP0203,Grand-Bourg,MarieGalante
+"16.325, -61.025",16.325,-61.025,GP0204,La Désirade,LaDesirade
+"16.325, -61.05",16.325,-61.05,GP0204,La Désirade,LaDesirade
+"16.225, -61.45",16.225,-61.45,GP0205,Le Gosier,RivieraDuLevant
+"16.225, -61.475",16.225,-61.475,GP0205,Le Gosier,RivieraDuLevant
+"16.225, -61.5",16.225,-61.5,GP0205,Le Gosier,RivieraDuLevant
+"16.25, -61.45",16.25,-61.45,GP0205,Le Gosier,RivieraDuLevant
+"16.25, -61.475",16.25,-61.475,GP0205,Le Gosier,RivieraDuLevant
+"16.3, -61.325",16.3,-61.325,GP0206,Le Moule,GrandeTerreNorth
+"16.3, -61.35",16.3,-61.35,GP0206,Le Moule,GrandeTerreNorth
+"16.3, -61.375",16.3,-61.375,GP0206,Le Moule,GrandeTerreNorth
+"16.3, -61.4",16.3,-61.4,GP0206,Le Moule,GrandeTerreNorth
+"16.3, -61.425",16.3,-61.425,GP0206,Le Moule,GrandeTerreNorth
+"16.325, -61.3",16.325,-61.3,GP0206,Le Moule,GrandeTerreNorth
+"16.325, -61.325",16.325,-61.325,GP0206,Le Moule,GrandeTerreNorth
+"16.325, -61.35",16.325,-61.35,GP0206,Le Moule,GrandeTerreNorth
+"16.325, -61.375",16.325,-61.375,GP0206,Le Moule,GrandeTerreNorth
+"16.325, -61.4",16.325,-61.4,GP0206,Le Moule,GrandeTerreNorth
+"16.35, -61.4",16.35,-61.4,GP0206,Le Moule,GrandeTerreNorth
+"16.225, -61.525",16.225,-61.525,GP0207,Les Abymes,CapExcellence
+"16.25, -61.5",16.25,-61.5,GP0207,Les Abymes,CapExcellence
+"16.25, -61.525",16.25,-61.525,GP0207,Les Abymes,CapExcellence
+"16.275, -61.45",16.275,-61.45,GP0207,Les Abymes,CapExcellence
+"16.275, -61.475",16.275,-61.475,GP0207,Les Abymes,CapExcellence
+"16.275, -61.5",16.275,-61.5,GP0207,Les Abymes,CapExcellence
+"16.275, -61.525",16.275,-61.525,GP0207,Les Abymes,CapExcellence
+"16.275, -61.55",16.275,-61.55,GP0207,Les Abymes,CapExcellence
+"16.3, -61.475",16.3,-61.475,GP0207,Les Abymes,CapExcellence
+"16.3, -61.5",16.3,-61.5,GP0207,Les Abymes,CapExcellence
+"16.3, -61.525",16.3,-61.525,GP0207,Les Abymes,CapExcellence
+"16.3, -61.45",16.3,-61.45,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.325, -61.425",16.325,-61.425,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.325, -61.45",16.325,-61.45,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.325, -61.475",16.325,-61.475,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.325, -61.5",16.325,-61.5,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.325, -61.525",16.325,-61.525,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.35, -61.45",16.35,-61.45,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.35, -61.475",16.35,-61.475,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.35, -61.5",16.35,-61.5,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.35, -61.525",16.35,-61.525,GP0208,Morne-à-l'Eau,GrandeTerreNorth
+"16.35, -61.425",16.35,-61.425,GP0209,Petit-Canal,GrandeTerreNorth
+"16.375, -61.425",16.375,-61.425,GP0209,Petit-Canal,GrandeTerreNorth
+"16.375, -61.45",16.375,-61.45,GP0209,Petit-Canal,GrandeTerreNorth
+"16.375, -61.475",16.375,-61.475,GP0209,Petit-Canal,GrandeTerreNorth
+"16.4, -61.425",16.4,-61.425,GP0209,Petit-Canal,GrandeTerreNorth
+"16.4, -61.45",16.4,-61.45,GP0209,Petit-Canal,GrandeTerreNorth
+"16.4, -61.475",16.4,-61.475,GP0209,Petit-Canal,GrandeTerreNorth
+"16.4, -61.5",16.4,-61.5,GP0209,Petit-Canal,GrandeTerreNorth
+"16.425, -61.4",16.425,-61.4,GP0209,Petit-Canal,GrandeTerreNorth
+"16.425, -61.45",16.425,-61.45,GP0209,Petit-Canal,GrandeTerreNorth
+", ",,,GP0210,Pointe-à-Pitre,BasseTerreNorth
+"16.4, -61.525",16.4,-61.525,GP0211,Port-Louis,GrandeTerreNorth
+"16.425, -61.475",16.425,-61.475,GP0211,Port-Louis,GrandeTerreNorth
+"16.425, -61.5",16.425,-61.5,GP0211,Port-Louis,GrandeTerreNorth
+"16.425, -61.525",16.425,-61.525,GP0211,Port-Louis,GrandeTerreNorth
+"16.45, -61.45",16.45,-61.45,GP0211,Port-Louis,GrandeTerreNorth
+"16.45, -61.525",16.45,-61.525,GP0211,Port-Louis,GrandeTerreNorth
+"16.25, -61.2",16.25,-61.2,GP0212,Saint-François,RivieraDuLevant
+"16.25, -61.3",16.25,-61.3,GP0212,Saint-François,RivieraDuLevant
+"16.275, -61.25",16.275,-61.25,GP0212,Saint-François,RivieraDuLevant
+"16.275, -61.275",16.275,-61.275,GP0212,Saint-François,RivieraDuLevant
+"16.275, -61.3",16.275,-61.3,GP0212,Saint-François,RivieraDuLevant
+"16.275, -61.325",16.275,-61.325,GP0212,Saint-François,RivieraDuLevant
+"16.3, -61.275",16.3,-61.275,GP0212,Saint-François,RivieraDuLevant
+"16.3, -61.3",16.3,-61.3,GP0212,Saint-François,RivieraDuLevant
+"15.95, -61.25",15.95,-61.25,GP0213,Saint-Louis,MarieGalante
+"15.95, -61.275",15.95,-61.275,GP0213,Saint-Louis,MarieGalante
+"15.95, -61.3",15.95,-61.3,GP0213,Saint-Louis,MarieGalante
+"15.975, -61.25",15.975,-61.25,GP0213,Saint-Louis,MarieGalante
+"15.975, -61.275",15.975,-61.275,GP0213,Saint-Louis,MarieGalante
+"15.975, -61.3",15.975,-61.3,GP0213,Saint-Louis,MarieGalante
+"16, -61.275",16,-61.275,GP0213,Saint-Louis,MarieGalante
+"16.225, -61.4",16.225,-61.4,GP0214,Sainte-Anne,RivieraDuLevant
+"16.225, -61.425",16.225,-61.425,GP0214,Sainte-Anne,RivieraDuLevant
+"16.25, -61.325",16.25,-61.325,GP0214,Sainte-Anne,RivieraDuLevant
+"16.25, -61.35",16.25,-61.35,GP0214,Sainte-Anne,RivieraDuLevant
+"16.25, -61.375",16.25,-61.375,GP0214,Sainte-Anne,RivieraDuLevant
+"16.25, -61.4",16.25,-61.4,GP0214,Sainte-Anne,RivieraDuLevant
+"16.25, -61.425",16.25,-61.425,GP0214,Sainte-Anne,RivieraDuLevant
+"16.275, -61.35",16.275,-61.35,GP0214,Sainte-Anne,RivieraDuLevant
+"16.275, -61.375",16.275,-61.375,GP0214,Sainte-Anne,RivieraDuLevant
+"16.275, -61.4",16.275,-61.4,GP0214,Sainte-Anne,RivieraDuLevant
+"16.275, -61.425",16.275,-61.425,GP0214,Sainte-Anne,RivieraDuLevant
