@@ -121,7 +121,7 @@ output_trade_capacity(r,rr,'Transmission Expansion Costs in MEUR/GW',y) = TradeC
 *output_trade_capacity('General','General','Transmission Expansion Costs in MEUR/GW/km',y) = TradeCapacityGrowthCosts('Power','AT','DE');
 
 parameters SelfSufficiencyRate,ElectrificationRate,output_other;
-SelfSufficiencyRate(r,y) = ProductionAnnual(y,'Power',r)/(SpecifiedAnnualDemand(r,'Power',y)+UseAnnual(y,'Power',r));
+SelfSufficiencyRate(r,y)$(SpecifiedAnnualDemand(r,'Power',y)+UseAnnual(y,'Power',r)) = ProductionAnnual(y,'Power',r)/(SpecifiedAnnualDemand(r,'Power',y)+UseAnnual(y,'Power',r));
 ElectrificationRate(Sector,y)$(sum((f,r)$(TagDemandFuelToSector(f,Sector)>0),TagDemandFuelToSector(f,Sector)*ProductionAnnual(y,f,r)) > 0) = sum((f,t,r)$(ProductionByTechnologyAnnual.l(y,t,f,r) > 0), TagDemandFuelToSector(f,Sector)*TagElectricTechnology(t)*ProductionByTechnologyAnnual.l(y,t,f,r))/sum((f,r)$(TagDemandFuelToSector(f,Sector)>0),TagDemandFuelToSector(f,Sector)*ProductionAnnual(y,f,r));
 
 Set FinalEnergy(f);
@@ -157,8 +157,8 @@ output_other('ElectrificationRate','X',Sector,'X',y)  = ElectrificationRate(Sect
 output_other('FinalEnergyConsumption',r,t,f,y) =  UseByTechnologyAnnual.l(y,t,f,r)/3.6;
 output_other('FinalEnergyConsumption',r,'InputDemand',f,y) = (SpecifiedAnnualDemand(r,f,y))/3.6;
 output_other('FinalEnergyConsumption',r,'InputDemand',Transport,y) = output_other('FinalEnergyConsumption',r,'InputDemand',Transport,y)*3.6;
-output_other('ElectricityShareOfFinalEnergy',r,'X','X',y) = (UseAnnual(y,'Power',r)+SpecifiedAnnualDemand(r,'Power',y)) /  (sum(FinalEnergy,UseAnnual(y,FinalEnergy,r))+SpecifiedAnnualDemand(r,'Power',y));
-output_other('ElectricityShareOfFinalEnergy','Total','X','X',y) = sum(r,(UseAnnual(y,'Power',r)+SpecifiedAnnualDemand(r,'Power',y))) /  sum(r,(sum(FinalEnergy,UseAnnual(y,FinalEnergy,r))+SpecifiedAnnualDemand(r,'Power',y)));
+output_other('ElectricityShareOfFinalEnergy',r,'X','X',y)$(sum(FinalEnergy,UseAnnual(y,FinalEnergy,r))+SpecifiedAnnualDemand(r,'Power',y)) = (UseAnnual(y,'Power',r)+SpecifiedAnnualDemand(r,'Power',y)) /  (sum(FinalEnergy,UseAnnual(y,FinalEnergy,r))+SpecifiedAnnualDemand(r,'Power',y));
+output_other('ElectricityShareOfFinalEnergy','Total','X','X',y)$(sum(r,(sum(FinalEnergy,UseAnnual(y,FinalEnergy,r))+SpecifiedAnnualDemand(r,'Power',y)))) = sum(r,(UseAnnual(y,'Power',r)+SpecifiedAnnualDemand(r,'Power',y))) /  sum(r,(sum(FinalEnergy,UseAnnual(y,FinalEnergy,r))+SpecifiedAnnualDemand(r,'Power',y)));
 
 parameter output_energydemandstatistics;
 *** Final Energy for all regions per sector
