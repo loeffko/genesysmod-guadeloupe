@@ -143,13 +143,14 @@ NewCapacity.fx('%year%',Transformation,r) = 0;
 NewCapacity.fx('%year%',StorageDummies,r) = 0;
 
 NewCapacity.up('%year%',Biomass,r) = +INF;
-NewCapacity.up('%year%','HLR_Gas_Boiler',r) = +INF;
+*NewCapacity.up('%year%','HLR_Gas_Boiler',r) = +INF;
 NewCapacity.up('%year%','HLI_Gas_Boiler',r) = +INF;
-NewCapacity.up('%year%','HHI_BF_BOF',r) = +INF;
-NewCapacity.up('%year%','HHI_Bio_BF_BOF',r) = +INF;
-NewCapacity.up('%year%','HHI_Scrap_EAF',r) = +INF;
-NewCapacity.up('%year%','HHI_DRI_EAF',r) = +INF;
-NewCapacity.up('%year%',t,r)$(TagTechnologyToSector(t,'CHP')) = +INF;
+*NewCapacity.up('%year%','HHI_BF_BOF',r) = +INF;
+*NewCapacity.up('%year%','HHI_Bio_BF_BOF',r) = +INF;
+*NewCapacity.up('%year%','HHI_Scrap_EAF',r) = +INF;
+*NewCapacity.up('%year%','HHI_DRI_EAF',r) = +INF;
+NewCapacity.up('%year%','HLR_Solar_Thermal',r) = +INF;
+*NewCapacity.up('%year%',t,r)$(TagTechnologyToSector(t,'CHP')) = +INF;
 
 
 *** ReserveMargin initialization

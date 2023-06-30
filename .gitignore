@@ -6,3 +6,14 @@ TempFiles/
 *.lxi
 project.gpr
 Tools/RES_Scripts/guadeloupe_2018_lowres.nc
+Results/large/output_additional_statistics.csv
+Results/large/output_annual_energy_balance.csv
+Results/large/output_capacity.csv
+Results/large/output_emissions.csv
+Results/large/output_endogenous_fuelcosts.csv
+Results/large/output_energy_demand_statistics.csv
+Results/large/output_production.csv
+Results/large/output_technology_costs_detailed.csv
+Results/large/output_transmission_capacity.csv
+Results/large/test.gdx
+Results/large/merged.gdx

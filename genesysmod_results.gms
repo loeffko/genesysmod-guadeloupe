@@ -44,7 +44,6 @@ output_energy_balance(r,'Demand','Demand','1',f,l,'Use','PJ','%emissionPathway%_
 output_energy_balance(r,'Demand','Demand','1',f,l,'Use','billion km','%emissionPathway%_%emissionScenario%',y)$(Demand(y,l,f,r) > 0 and TagDemandFuelToSector(f,'Transportation')) = - Demand(y,l,f,r) ;
 output_energy_balance(r,'Trade','Trade','1',f,l,'Import','PJ','%emissionPathway%_%emissionScenario%',y) = sum(rr, Import.l(y,l,f,r,rr)) ;
 output_energy_balance(r,'Trade','Trade','1',f,l,'Export','PJ','%emissionPathway%_%emissionScenario%',y) = - sum(rr, Export.l(y,l,f,r,rr)) ;
-$include genesysmod_baseyear_2020.gms
 
 parameter output_energy_balance_annual(*,*,*,*,*,*,*,*);
 output_energy_balance_annual(r,se,t,f,'Production','PJ','%emissionPathway%_%emissionScenario%',y)$(TagTechnologyToSector(t,se)  and not TagTechnologyToSector(t,'Transportation')) = sum((l,m),output_energy_balance(r,se,t,m,f,l,'Production','PJ','%emissionPathway%_%emissionScenario%',y));

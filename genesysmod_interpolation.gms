@@ -39,7 +39,7 @@ RegionalAnnualEmissionLimit(r,e,y)$(RegionalAnnualEmissionLimit(r,e,y) = 0 and R
 AnnualEmissionLimit(e,y)$(AnnualEmissionLimit(e,y) = 0 and AnnualEmissionLimit(e,y+1) > 0) = (AnnualEmissionLimit(e,y-1)+AnnualEmissionLimit(e,y+1))/2;
 AnnualSectoralEmissionLimit(e,se,y)$(AnnualSectoralEmissionLimit(e,se,y)=0 and AnnualSectoralEmissionLimit(e,se,y+1) > 0) =  (AnnualSectoralEmissionLimit(e,se,y-1)+AnnualSectoralEmissionLimit(e,se,y+1))/2;
 
-ModalSplitByFuelandModalType(r,f,y,mt)$(ModalSplitByFuelandModalType(r,f,y,mt) = 0 and ModalSplitByFuelandModalType(r,f,y+1,mt) > 0) =  (ModalSplitByFuelandModalType(r,f,y-1,mt)+ModalSplitByFuelandModalType(r,f,y+1,mt))/2 ;
+ModalSplitByFuelandModalType(r,f,y,mt)$(ModalSplitByFuelandModalType(r,f,y,mt) = 0 and ModalSplitByFuelandModalType(r,f,y+1,mt) > 0 and ord(y)>1) =  (ModalSplitByFuelandModalType(r,f,y-1,mt)+ModalSplitByFuelandModalType(r,f,y+1,mt))/2 ;
 
 
 InputActivityRatio(r,t,f,m,y)$(InputActivityRatio(r,t,f,m,y) = 0) = InputActivityRatio(r,t,f,m,y-1);

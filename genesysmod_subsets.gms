@@ -346,6 +346,10 @@ Transport('PSNG_Road_BEV') = yes;
 Transport('PSNG_Road_H2') = yes;
 Transport('PSNG_Road_ICE') = yes;
 Transport('PSNG_Road_PHEV') = yes;
+Transport('PSNG_Ship_Bio') = yes;
+Transport('PSNG_Ship_Conv') = yes;
+Transport('PSNG_Ship_Bio') = yes;
+
 
 set Passenger(t);
 Passenger(t) = no;
@@ -605,7 +609,7 @@ ModalGroups('MT_PSNG_RAIL') = yes;
 ModalGroups('MT_PSNG_AIR') = yes;
 ModalGroups('MT_FRT_ROAD') = yes;
 ModalGroups('MT_FRT_RAIL') = yes;
-ModalGroups('MT_FRT_SHIP') = yes;
+ModalGroups('MT_PSNG_SHIP') = yes;
 
 set PhaseInSet(t);
 PhaseInSet(t) = no;
