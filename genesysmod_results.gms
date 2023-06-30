@@ -118,7 +118,7 @@ output_exogenous_costs(r,'Carbon','Carbon Price',y) = EmissionsPenalty(r,'CO2',y
 parameter output_trade_capacity;
 output_trade_capacity(r,rr,'Power Transmissions Capacity',y) = TotalTradeCapacity.l(y, 'power', r, rr);
 output_trade_capacity(r,rr,'Transmission Expansion Costs in MEUR/GW',y) = TradeCapacityGrowthCosts('Power',r,rr)*TradeRoute(y,'Power',r,rr);
-output_trade_capacity('General','General','Transmission Expansion Costs in MEUR/GW/km',y) = TradeCapacityGrowthCosts('Power','AT','DE');
+*output_trade_capacity('General','General','Transmission Expansion Costs in MEUR/GW/km',y) = TradeCapacityGrowthCosts('Power','AT','DE');
 
 parameters SelfSufficiencyRate,ElectrificationRate,output_other;
 SelfSufficiencyRate(r,y) = ProductionAnnual(y,'Power',r)/(SpecifiedAnnualDemand(r,'Power',y)+UseAnnual(y,'Power',r));
@@ -138,11 +138,11 @@ FinalEnergy('Nuclear') = yes;
 Set EU27(r_full);
 EU27(r) = yes;
 EU27('World') = no;
-EU27('CH') = no;
-EU27('NO') = no;
-EU27('NONEU_Balkan') = no;
-EU27('TR') = no;
-EU27('UK') = no;
+*EU27('CH') = no;
+*EU27('NO') = no;
+*EU27('NONEU_Balkan') = no;
+*EU27('TR') = no;
+*EU27('UK') = no;
 
 parameter TagFinalDemandSector(se);
 TagFinalDemandSector('Power')=1;

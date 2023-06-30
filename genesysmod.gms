@@ -39,7 +39,7 @@ $if not set switch_ccs                   $setglobal switch_ccs 1
 $if not set switch_ramping               $setglobal switch_ramping 0
 $if not set switch_short_term_storage    $setglobal switch_short_term_storage 1
 $if not set switch_all_regions           $setglobal switch_all_regions 1
-$if not set switch_infeasibility_tech    $setglobal switch_infeasibility_tech 0
+$if not set switch_infeasibility_tech    $setglobal switch_infeasibility_tech 1
 $if not set switch_base_year_bounds      $setglobal switch_base_year_bounds 1
 $if not set switch_only_load_gdx         $setglobal switch_only_load_gdx 0
 $if not set switch_write_output          $setglobal switch_write_output gdx
@@ -47,7 +47,7 @@ $if not set switch_aggregate_region      $setglobal switch_aggregate_region 0
 $if not set switch_intertemporal         $setglobal switch_intertemporal 0
 $if not set switch_weighted_emissions    $setglobal switch_weighted_emissions 1
 $if not set switch_employment_calculation $setglobal switch_employment_calculation 0
-$if not set switch_test_data_load        $setglobal switch_test_data_load 1
+$if not set switch_test_data_load        $setglobal switch_test_data_load 0
 $if not set switch_only_write_results    $setglobal switch_only_write_results 0
 
 $if not set set_symmetric_transmission   $setglobal set_symmetric_transmission 0.85
