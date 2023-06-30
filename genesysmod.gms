@@ -68,7 +68,7 @@ $if not set set_peaking_minrun_share     $setglobal set_peaking_minrun_share 0.1
 
 $if not set solver                       $setglobal solver gurobi
 $if not set model_region                 $setglobal model_region guadeloupe
-$if not set data_base_region             $setglobal data_base_region GrandeTerre
+$if not set data_base_region             $setglobal data_base_region GrandeTerreNorth
 $if not set global_data_file             $setglobal global_data_file Global_Data_v13_oE_kl_26_04_2022
 $if not set data_file                    $setglobal data_file Data_Guadeloupe_v00_kl_26_06_2023
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
