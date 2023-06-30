@@ -433,8 +433,10 @@ CapacityFactor(r,t,l,y) = 1;
 CapacityFactor(r,Solar,l,y) = 0;
 CapacityFactor(r,Wind,l,y) = 0;
 
-CapacityFactor(r,'HLR_Heatpump_Aerial',l,y) = ScaledCountryData(r,l,'heat_pump_air');
-CapacityFactor(r,'HLR_Heatpump_Ground',l,y) = ScaledCountryData(r,l,'heat_pump_ground');
+TimeDepEfficiency(r,'HLR_Heatpump_Aerial',l,y) = ScaledCountryData(r,l,'heat_pump_air');
+TimeDepEfficiency(r,'HLR_Heatpump_Ground',l,y) = ScaledCountryData(r,l,'heat_pump_ground');
+CapacityFactor(r,'HLR_Heatpump_Aerial',l,y) = 1;
+CapacityFactor(r,'HLR_Heatpump_Ground',l,y) = 1;
 
 CapacityFactor(r,'Res_pv_utility_opt',l,y) = ScaledCountryData(r,l,'pv_opt');
 CapacityFactor(r,'Res_Wind_Onshore_opt',l,y) = ScaledCountryData(r,l,'wind_onshore_opt');
@@ -454,8 +456,10 @@ CapacityFactor(r,'Res_Hydro_Small',l,y) = ScaledCountryData(r,l,'hydro_ror');
 
 
 if(card(l) = 8760,
-CapacityFactor(r,'HLR_Heatpump_Aerial',l,y) = CountryData(r,l,'heat_pump_air');
-CapacityFactor(r,'HLR_Heatpump_Ground',l,y) = CountryData(r,l,'heat_pump_ground');
+TimeDepEfficiency(r,'HLR_Heatpump_Aerial',l,y) = CountryData(r,l,'heat_pump_air');
+TimeDepEfficiency(r,'HLR_Heatpump_Ground',l,y) = CountryData(r,l,'heat_pump_ground');
+CapacityFactor(r,'HLR_Heatpump_Aerial',l,y) = 1;
+CapacityFactor(r,'HLR_Heatpump_Ground',l,y) = 1;
 
 CapacityFactor(r,'Res_pv_utility_opt',l,y) = CountryData(r,l,'pv_opt');
 CapacityFactor(r,'Res_Wind_Onshore_opt',l,y) = CountryData(r,l,'wind_onshore_opt');

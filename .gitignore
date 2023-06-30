@@ -4,3 +4,4 @@ TempFiles/
 *.log
 *.lst
 *.lxi
+project.gpr

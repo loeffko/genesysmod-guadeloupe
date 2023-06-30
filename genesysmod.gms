@@ -72,7 +72,7 @@ $if not set data_base_region             $setglobal data_base_region GrandeTerre
 $if not set global_data_file             $setglobal global_data_file Global_Data_v13_oE_kl_26_04_2022
 $if not set data_file                    $setglobal data_file Data_Guadeloupe_v00_kl_26_06_2023
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
-$if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Guadeloupe_v02_kl_28_06_2023
+$if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Guadeloupe_v03_kl_30_06_2023
 $if not set threads                      $setglobal threads 4
 $if not set timeseries                   $setglobal timeseries elmod
 $if not set elmod_nthhour                $setglobal elmod_nthhour 484

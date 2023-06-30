@@ -44,6 +44,8 @@ TotalTechnologyModelPeriodActivityUpperLimit(REGION,TECHNOLOGY) = 999999;
 TotalTechnologyModelPeriodActivityLowerLimit(REGION,TECHNOLOGY) = 0;
 TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y)$(TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y) = 0) = 999999;
 
+TimeDepEfficiency(r,t,l,y) = 1;
+
 TradeCosts('ETS',r,rr)$(not TradeCosts('ETS',r,rr)) = 0.01;
 VariableCost(r,t,m,y)$(not VariableCost(r,t,m,y)) = 0.01;
 

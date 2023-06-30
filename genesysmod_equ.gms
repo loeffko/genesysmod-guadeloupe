@@ -227,7 +227,7 @@ Export.fx(y,l,f,rr,r)$(TradeRoute(y,f,r,rr) = 0) = 0;
 NetTrade.fx(y,l,f,r)$(sum(rr,TradeRoute(y,f,r,rr)) = 0) = 0;
 
 equation EBa11_EnergyBalanceEachTS5(YEAR_FULL,TIMESLICE_FULL,FUEL,REGION_FULL);
-EBa11_EnergyBalanceEachTS5(y,l,f,r)$(IgnoreFuel(y,f,r) = 0).. sum((t,m)$(OutputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y))*YearSplit(l,y) =e= (Demand(y,l,f,r) + sum((t,m)$(InputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y))*YearSplit(l,y) + NetTrade(y,l,f,r) + Curtailment(y,l,f,r));
+EBa11_EnergyBalanceEachTS5(y,l,f,r)$(IgnoreFuel(y,f,r) = 0).. sum((t,m)$(OutputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y))*YearSplit(l,y) =e= (Demand(y,l,f,r) + sum((t,m)$(InputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y))*TimeDepEfficiency(r,t,l,y)*YearSplit(l,y) + NetTrade(y,l,f,r) + Curtailment(y,l,f,r));
 
 equation EBa12_NetTradeBalance(YEAR_FULL,TIMESLICE_FULL,FUEL,REGION_FULL);
 EBa12_NetTradeBalance(y,l,f,r)$(sum(rr,TradeRoute(y,f,r,rr)) > 0).. sum(rr$(TradeRoute(y,f,r,rr)), Export(y,l,f,r,rr)*(1+TradeLossBetweenRegions(y,f,r,rr)) - Import(y,l,f,r,rr)) =e= NetTrade(y,l,f,r);
@@ -237,7 +237,7 @@ EBa13_CurtailmentAnnual(y,f,r)$(sum(l,Curtailment.up(y,l,f,r)) > 0).. Curtailmen
 CurtailmentAnnual.fx(y,f,r)$(sum(l,Curtailment.up(y,l,f,r)) = 0) = 0;
 
 equation EBa14_SelfSufficiency(YEAR_FULL,FUEL,REGION_FULL);
-EBa14_SelfSufficiency(y,f,r)$(SelfSufficiency(y,f,r) <> 0).. sum((l,t,m)$(OutputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y)*YearSplit(l,y)) =g= (SpecifiedAnnualDemand(r,f,y)+sum((l,t,m)$(InputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y)*YearSplit(l,y)))*SelfSufficiency(y,f,r);
+EBa14_SelfSufficiency(y,f,r)$(SelfSufficiency(y,f,r) <> 0).. sum((l,t,m)$(OutputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y)*YearSplit(l,y)) =g= (SpecifiedAnnualDemand(r,f,y)+sum((l,t,m)$(InputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y)*TimeDepEfficiency(r,t,l,y)*YearSplit(l,y)))*SelfSufficiency(y,f,r);
 
 *
 * ##############* Energy Balance B #############
@@ -248,7 +248,7 @@ EBb3_EnergyBalanceEachYear3(y,f,r)$(sum(rr,TradeRoute(y,f,r,rr)) > 0).. sum(l, (
 NetTradeAnnual.fx(y,f,r)$(sum(rr,TradeRoute(y,f,r,rr)) = 0) = 0;
 
 equation EBb4_EnergyBalanceEachYear4(YEAR_FULL,FUEL,REGION_FULL);
-EBb4_EnergyBalanceEachYear4(y,f,r).. sum((l,t,m)$(OutputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y)*YearSplit(l,y)) =g= sum((l,t,m)$(InputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y)*YearSplit(l,y)) + NetTradeAnnual(y,f,r);
+EBb4_EnergyBalanceEachYear4(y,f,r).. sum((l,t,m)$(OutputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y)*YearSplit(l,y)) =g= sum((l,t,m)$(InputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y)*TimeDepEfficiency(r,t,l,y)*YearSplit(l,y)) + NetTradeAnnual(y,f,r);
 
 
 *

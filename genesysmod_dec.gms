@@ -131,6 +131,7 @@ parameter TagDispatchableTechnology(TECHNOLOGY);
 parameter BaseYearProduction(TECHNOLOGY,FUEL,YEAR_FULL);
 parameter RegionalBaseYearProduction(REGION_FULL,TECHNOLOGY,FUEL,YEAR_FULL);
 parameter TagElectricTechnology(TECHNOLOGY);
+parameter TimeDepEfficiency(REGION_FULL,TECHNOLOGY,TIMESLICE,YEAR_FULL) Time dependent efficiency for heatpumps;
 
 parameter RegionalCCSLimit(REGION_FULL);
 
