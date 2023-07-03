@@ -81,7 +81,7 @@ $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
 
 
 
-$if not set emissionPathway              $setglobal emissionPathway TechnoFriendly
+$if not set emissionPathway              $setglobal emissionPathway Free
 $if not set emissionScenario             $setglobal emissionScenario globalLimit
 
 $if not set socialdiscountrate           $setglobal socialdiscountrate 0.05

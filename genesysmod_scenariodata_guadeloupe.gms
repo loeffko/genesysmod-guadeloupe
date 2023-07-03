@@ -85,3 +85,16 @@ equation TrPl1a_TradeCapacityPipelinesLines(YEAR_FULL,TIMESLICE_FULL,REGION_FULL
 TrPl1a_TradeCapacityPipelinesLines(y,l,r,rr).. sum(GasFuels$(TradeRoute(y,GasFuels,r,rr) > 0), Import(y,l,GasFuels,rr,r)) =l= TotalTradeCapacity(y,'Gas_Natural',r,rr);
 
 
+*
+* ############## Additions for NTNU Guadeloupe study
+*
+
+AvailabilityFactor(r,CHPs,y) = 0;
+
+
+
+
+$ifthen %EmissionPathway% == Independence2040
+ProductionByTechnologyAnnual.fx(y,t,'Gas_Natural',r)$(YearVal(y)>=2040) = 0;
+
+$endif
