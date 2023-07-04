@@ -150,6 +150,7 @@ NewCapacity.up('%year%','HLI_Gas_Boiler',r) = +INF;
 *NewCapacity.up('%year%','HHI_Scrap_EAF',r) = +INF;
 *NewCapacity.up('%year%','HHI_DRI_EAF',r) = +INF;
 NewCapacity.up('%year%','HLR_Solar_Thermal',r) = +INF;
+NewCapacity.up('%year%','HLI_Solar_Thermal',r) = +INF;
 *NewCapacity.up('%year%',t,r)$(TagTechnologyToSector(t,'CHP')) = +INF;
 
 
@@ -186,7 +187,7 @@ Curtailment.fx(y,l,TransportFuels,r) = 0;
 Curtailment.up(y,l,'Heat_High_Industrial',r) = 1;
 Curtailment.up(y,l,'Heat_Medium_Industrial',r) = 1;
 Curtailment.up(y,l,'Heat_Low_Industrial',r) = 1;
-Curtailment.up(y,l,'Heat_Low_Residential',r) = 0.5;
+Curtailment.up(y,l,'Heat_Low_Residential',r) = 5;
 Curtailment.up(y,l,'Heat_District',r) = 1;
 
 AnnualSectoralEmissionLimit(e,se,y)$(not AnnualSectoralEmissionLimit(e,se,y)) = 999999;
