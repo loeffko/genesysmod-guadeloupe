@@ -269,7 +269,7 @@ smoothing_range('heat_pump_air') = 3;
 smoothing_range('heat_pump_ground') = 3;
 smoothing_range('hydro_ror') = 3;
 
-smoothing_range(cde)=1;
+smoothing_range(cde)=0;
 
 
 * Full calculation

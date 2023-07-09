@@ -67,7 +67,7 @@ TotalAnnualMaxCapacity(r,t,y)$(ResidualCapacity(r,t,y) > TotalAnnualMaxCapacity(
 DummyTechnology('Infeasibility_HLI') = yes;
 DummyTechnology('Infeasibility_HMI') = yes;
 DummyTechnology('Infeasibility_HHI') = yes;
-DummyTechnology('Infeasibility_HRI') = yes;
+DummyTechnology('Infeasibility_HLR') = yes;
 DummyTechnology('Infeasibility_Power') = yes;
 DummyTechnology('Infeasibility_Mob_Passenger') = yes;
 DummyTechnology('Infeasibility_Mob_Freight') = yes;
@@ -79,7 +79,7 @@ $ifthen %switch_infeasibility_tech% == 1
 OutputActivityRatio(REGION,'Infeasibility_HLI','Heat_Low_Industrial','1',y) = 1;
 OutputActivityRatio(REGION,'Infeasibility_HMI','Heat_Medium_Industrial','1',y) = 1;
 OutputActivityRatio(REGION,'Infeasibility_HHI','Heat_High_Industrial','1',y) = 1;
-OutputActivityRatio(REGION,'Infeasibility_HRI','Heat_Low_Residential','1',y) = 1;
+OutputActivityRatio(REGION,'Infeasibility_HLR','Heat_Low_Residential','1',y) = 1;
 OutputActivityRatio(REGION,'Infeasibility_Power','Power','1',y) = 1;
 OutputActivityRatio(REGION,'Infeasibility_Mob_Passenger','Mobility_Passenger','1',y) = 1 ;
 OutputActivityRatio(REGION,'Infeasibility_Mob_Freight','Mobility_Freight','1',y) = 1 ;
@@ -102,6 +102,7 @@ $endif
 * ####### Bounds for non-supply technologies #############
 *
 TotalAnnualMaxCapacity(r,Transformation,y) = 999999;
+TotalAnnualMaxCapacity(r,StorageDummies,y) = 999999;
 TotalAnnualMaxCapacity(r,FossilPower,y) = 999999;
 TotalAnnualMaxCapacity(r,FossilFuelGeneration,y) = 999999;
 TotalAnnualMaxCapacity(r,CHPs,y) = 999999;
@@ -136,11 +137,11 @@ CapacityFactor(r,'Res_PV_Rooftop_Residential',l,y) = CapacityFactor(r,'Res_PV_Ro
 * ####### No new capacity construction in 2015 #############
 *
 
-NewCapacity.fx('%year%',Transformation,r) = 0;
+*NewCapacity.fx('%year%',Transformation,r) = 0;
 NewCapacity.fx('%year%',PowerSupply,r) = 0;
 NewCapacity.fx('%year%',SectorCoupling,r) = 0;
-NewCapacity.fx('%year%',Transformation,r) = 0;
-NewCapacity.fx('%year%',StorageDummies,r) = 0;
+*NewCapacity.fx('%year%',Transformation,r) = 0;
+*NewCapacity.fx('%year%',StorageDummies,r) = 0;
 
 NewCapacity.up('%year%',Biomass,r) = +INF;
 *NewCapacity.up('%year%','HLR_Gas_Boiler',r) = +INF;
@@ -149,8 +150,10 @@ NewCapacity.up('%year%','HLI_Gas_Boiler',r) = +INF;
 *NewCapacity.up('%year%','HHI_Bio_BF_BOF',r) = +INF;
 *NewCapacity.up('%year%','HHI_Scrap_EAF',r) = +INF;
 *NewCapacity.up('%year%','HHI_DRI_EAF',r) = +INF;
+NewCapacity.up('%year%',Heat,r) = 0;
 NewCapacity.up('%year%','HLR_Solar_Thermal',r) = +INF;
 NewCapacity.up('%year%','HLI_Solar_Thermal',r) = +INF;
+NewCapacity.up('%year%','D_Heat_HLR',r) = +INF;
 *NewCapacity.up('%year%',t,r)$(TagTechnologyToSector(t,'CHP')) = +INF;
 
 
@@ -283,5 +286,5 @@ scalar start_hour /%elmod_starthour%/;
 
 StorageLevelTSStart.fx('S_Battery_Li-Ion',y,l,r)$(mod((ord(l)+(start_hour/hour_steps) and hour_steps),(24/hour_steps)) = 0) = 0;
 StorageLevelTSStart.fx('S_Battery_Redox',y,l,r)$(mod((ord(l)+(start_hour/hour_steps) and hour_steps),(24/hour_steps)) = 0) = 0;
-StorageLevelTSStart.fx('S_Heat_HLR',y,l,r)$(mod((ord(l)+(start_hour/hour_steps) and hour_steps),(24/hour_steps)) = 0) = 0;
-StorageLevelTSStart.fx('S_Heat_HLI',y,l,r)$(mod((ord(l)+(start_hour/hour_steps and hour_steps)),(24/hour_steps)) = 0) = 0;
+*StorageLevelTSStart.fx('S_Heat_HLR',y,l,r)$(mod((ord(l)+(start_hour/hour_steps) and hour_steps),(24/hour_steps)) = 0) = 0;
+*StorageLevelTSStart.fx('S_Heat_HLI',y,l,r)$(mod((ord(l)+(start_hour/hour_steps and hour_steps)),(24/hour_steps)) = 0) = 0;

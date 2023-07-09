@@ -344,8 +344,8 @@ sum((y,CCS),
 ) =l= RegionalCCSLimit(r);
 $endif
 
-equation CC5h_AnnualStorageChangeLimit(YEAR_FULL,REGION_FULL,FUEL);
-CC5h_AnnualStorageChangeLimit(y,r,f)$(Yearval(y) > %year% and ProductionGrowthLimit(y,f)>0).. sum(StorageDummies,ProductionByTechnologyAnnual(y,StorageDummies,f,r)-ProductionByTechnologyAnnual(y-1,StorageDummies,f,r)) =l= YearlyDifferenceMultiplier(y-1)*(ProductionGrowthLimit(y,f)+StorageLimitOffset)*sum((t),ProductionByTechnologyAnnual(y-1,t,f,r))
+*equation CC5h_AnnualStorageChangeLimit(YEAR_FULL,REGION_FULL,FUEL);
+*CC5h_AnnualStorageChangeLimit(y,r,f)$(Yearval(y) > %year% and ProductionGrowthLimit(y,f)>0).. sum(StorageDummies,ProductionByTechnologyAnnual(y,StorageDummies,f,r)-ProductionByTechnologyAnnual(y-1,StorageDummies,f,r)) =l= YearlyDifferenceMultiplier(y-1)*(ProductionGrowthLimit(y,f)+StorageLimitOffset)*sum((t),ProductionByTechnologyAnnual(y-1,t,f,r))
 
 $endif
 

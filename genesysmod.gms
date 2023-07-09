@@ -34,7 +34,7 @@ starttime = jnow;
 $if not set year                         $setglobal year 2018
 
 $if not set switch_unixPath              $setglobal switch_unixPath 0
-$if not set switch_investLimit           $setglobal switch_investLimit 1
+$if not set switch_investLimit           $setglobal switch_investLimit 0
 $if not set switch_ccs                   $setglobal switch_ccs 1
 $if not set switch_ramping               $setglobal switch_ramping 0
 $if not set switch_short_term_storage    $setglobal switch_short_term_storage 1
@@ -54,14 +54,14 @@ $if not set set_symmetric_transmission   $setglobal set_symmetric_transmission 0
 $if not set set_storagelevelstart_up     $setglobal set_storagelevelstart_up 1
 $if not set set_storagelevelstart_low    $setglobal set_storagelevelstart_low 0.5
 
-$if not set switch_peaking_capacity      $setglobal switch_peaking_capacity 1
-$if not set switch_peaking_with_trade    $setglobal switch_peaking_with_trade 0
+$if not set switch_peaking_capacity      $setglobal switch_peaking_capacity 0
+$if not set switch_peaking_with_trade    $setglobal switch_peaking_with_trade 1
 $if not set switch_peaking_with_storages $setglobal switch_peaking_with_storages 1
 $if not set switch_peaking_minrun        $setglobal switch_peaking_minrun 1
 $if not set set_peaking_slack            $setglobal set_peaking_slack 1.0
 *consider vRES only partially (1.0 consider vRES fully, 0.0 ignore vRES in peaking equation)
 $if not set set_peaking_res_cf           $setglobal set_peaking_res_cf 0.5
-$if not set set_peaking_min_thermal      $setglobal set_peaking_min_thermal 0.5
+$if not set set_peaking_min_thermal      $setglobal set_peaking_min_thermal 0
 $if not set set_peaking_startyear        $setglobal set_peaking_startyear 2025
 $if not set set_peaking_minrun_share     $setglobal set_peaking_minrun_share 0.15
 
@@ -70,13 +70,13 @@ $if not set solver                       $setglobal solver gurobi
 $if not set model_region                 $setglobal model_region guadeloupe
 $if not set data_base_region             $setglobal data_base_region GrandeTerreNorth
 $if not set global_data_file             $setglobal global_data_file Global_Data_v13_oE_kl_26_04_2022
-$if not set data_file                    $setglobal data_file Data_Guadeloupe_v00_kl_26_06_2023
+$if not set data_file                    $setglobal data_file Data_Guadeloupe_v01_kl_09_07_2023
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
 $if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Guadeloupe_v03_kl_30_06_2023
 $if not set threads                      $setglobal threads 4
 $if not set timeseries                   $setglobal timeseries elmod
-$if not set elmod_nthhour                $setglobal elmod_nthhour 484
-$if not set elmod_starthour              $setglobal elmod_starthour 8
+$if not set elmod_nthhour                $setglobal elmod_nthhour 122
+$if not set elmod_starthour              $setglobal elmod_starthour 18
 $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
 
 

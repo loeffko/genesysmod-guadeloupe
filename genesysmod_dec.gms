@@ -66,7 +66,7 @@ set TECHNOLOGY /Infeasibility_Power,
                 Infeasibility_HLI,
                 Infeasibility_HMI,
                 Infeasibility_HHI,
-                Infeasibility_HRI,
+                Infeasibility_HLR,
                 Infeasibility_Mob_Passenger,
                 Infeasibility_Mob_Freight /;
 alias (t,TECHNOLOGY);

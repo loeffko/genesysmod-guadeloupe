@@ -91,6 +91,15 @@ TrPl1a_TradeCapacityPipelinesLines(y,l,r,rr).. sum(GasFuels$(TradeRoute(y,GasFue
 
 AvailabilityFactor(r,CHPs,y) = 0;
 
+*NewCapacity.lo('2018','HLR_Solar_Thermal','MarieGalante') = 3;
+*NewCapacity.lo('2018','D_Heat_HLR','MarieGalante') = 2;
+*ProductionByTechnologyAnnual.lo('2018','HLR_Solar_Thermal','Heat_Low_Residential','MarieGalante') =  2;
+*ProductionByTechnologyAnnual.lo('2018','D_Heat_HLR','Heat_Low_Residential','MarieGalante') =  2;
+*NewCapacity.up('%year%','HLR_Gas_Boiler',r) = 0;
+*CapitalCost(r,'D_Heat_HLR',y) = 0.01;
+NewCapacity.up(y,'D_PHS',r) = 0;
+
+
 
 
 
