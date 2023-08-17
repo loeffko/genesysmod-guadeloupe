@@ -5,11 +5,11 @@
 * Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
 *
 * Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
+* by Konstantin Lï¿½ffler, Thorsten Burandt, Karlo Hainsch
 *
 * #############################################################
 *
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
+* Copyright 2020 Technische Universitï¿½t Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -70,12 +70,12 @@ $if not set solver                       $setglobal solver gurobi
 $if not set model_region                 $setglobal model_region guadeloupe
 $if not set data_base_region             $setglobal data_base_region GrandeTerreNorth
 $if not set global_data_file             $setglobal global_data_file Global_Data_v13_oE_kl_26_04_2022
-$if not set data_file                    $setglobal data_file Data_Guadeloupe_v01_kl_09_07_2023
+$if not set data_file                    $setglobal data_file Data_Guadeloupe_Case1_v00_mo_28_07_2023
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
 $if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Guadeloupe_v03_kl_30_06_2023
 $if not set threads                      $setglobal threads 4
 $if not set timeseries                   $setglobal timeseries elmod
-$if not set elmod_nthhour                $setglobal elmod_nthhour 122
+$if not set elmod_nthhour                $setglobal elmod_nthhour 488
 $if not set elmod_starthour              $setglobal elmod_starthour 18
 $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
 

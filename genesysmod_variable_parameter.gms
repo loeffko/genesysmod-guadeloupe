@@ -5,7 +5,7 @@
 * Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
 *
 * Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
+* by Konstantin Lï¿½ffler, Thorsten Burandt, Karlo Hainsch
 *
 * #############################################################
 
@@ -18,6 +18,9 @@ RateOfProductionByTechnologyByMode(y,l,t,m,f,r) = RateOfActivity.l(y,l,t,m,r)*Ou
 
 parameter RateOfUseByTechnologyByMode(y_full,TIMESLICE_FULL,TECHNOLOGY,MODE_OF_OPERATION,FUEL,REGION_FULL);
 RateOfUseByTechnologyByMode(y,l,t,m,f,r) = RateOfActivity.l(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y);
+
+* Changed for Guadeloupe
+*RateOfUseByTechnologyByMode(y,l,t,m,f,r) = RateOfActivity.l(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y)*TimeDepEfficiency(r,t,l,y);
 
 parameter RateOfProductionByTechnology(y_full,TIMESLICE_FULL,TECHNOLOGY,FUEL,REGION_FULL);
 RateOfProductionByTechnology(y,l,t,f,r) = sum(m$(OutputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity.l(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y));

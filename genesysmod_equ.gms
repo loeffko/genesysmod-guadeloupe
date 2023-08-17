@@ -5,11 +5,11 @@
 * Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
 *
 * Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
+* by Konstantin Lï¿½ffler, Thorsten Burandt, Karlo Hainsch
 *
 * #############################################################
 *
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
+* Copyright 2020 Technische Universitï¿½t Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -701,6 +701,10 @@ T2_ProductionOfTechnologyByModalSplit(mt,l,r,TransportFuels,y)$(sum((t,m),TagTec
 equation T3_ModalSplitBalance(MODALTYPE,TIMESLICE_FULL,REGION_FULL,FUEL,YEAR_FULL);
 T3_ModalSplitBalance(mt,l,r,TransportFuels,y)$(sum((t,m),TagTechnologyToModalType(t,m,mt)) <> 0).. ProductionSplitByModalType(mt,l,r,TransportFuels,y) =g= DemandSplitByModalType(mt,l,r,TransportFuels,y);
 
+* Added for Guadeloupe. This constraint has been added to consider a lower limit for PSNG_Road_BEV. As per my last discusstion with Konstantin this could be implemented through input data. 
+equation T4_ModalSplitBalance(Technology,TIMESLICE_FULL,REGION_FULL,FUEL,YEAR_FULL);
+T4_ModalSplitBalance('PSNG_Road_BEV',l,r,TransportFuels,y)$(sum(m,TagTechnologyToModalType('PSNG_Road_BEV',m,'MT_PSNG_ROAD_RE')) <> 0).. sum(m$(OutputActivityRatio(r,'PSNG_Road_BEV',TransportFuels,m,y) <> 0),TagTechnologyToModalType('PSNG_Road_BEV',m,"MT_PSNG_ROAD_RE")*RateOfActivity(y,l,'PSNG_Road_BEV',m,r)*OutputActivityRatio(r,'PSNG_Road_BEV',TransportFuels,m,y)*YearSplit(l,y)) =g= DemandSplitByModalType("MT_PSNG_ROAD_RE",l,r,TransportFuels,y);
+
 ProductionSplitByModalType.fx('MT_FRT_SHIP_RE',l,r,'Mobility_Passenger',y) = 0;
 ProductionSplitByModalType.fx('MT_FRT_ROAD_RE',l,r,'Mobility_Passenger',y) = 0;
 ProductionSplitByModalType.fx('MT_FRT_RAIL_RE',l,r,'Mobility_Passenger',y) = 0;
@@ -714,6 +718,10 @@ ProductionSplitByModalType.fx('MT_PSNG_RAIL_RE',l,r,'Mobility_Freight',y) = 0;
 ProductionSplitByModalType.fx('MT_PSNG_AIR_CONV',l,r,'Mobility_Freight',y) = 0;
 ProductionSplitByModalType.fx('MT_PSNG_ROAD_CONV',l,r,'Mobility_Freight',y) = 0;
 ProductionSplitByModalType.fx('MT_PSNG_RAIL_CONV',l,r,'Mobility_Freight',y) = 0;
+
+* This constraint eliminate the usage of passenger rail because there is no railway in Guadeloupe. 
+ProductionSplitByModalType.fx('MT_PSNG_RAIL',l,r,'Mobility_Passenger',y) = 0;
+
 *$offtext
 
 $ifthen %switch_ramping% == 1

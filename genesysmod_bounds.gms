@@ -5,11 +5,11 @@
 * Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
 *
 * Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
+* by Konstantin Lï¿½ffler, Thorsten Burandt, Karlo Hainsch
 *
 * #############################################################
 *
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
+* Copyright 2020 Technische Universitï¿½t Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -43,6 +43,13 @@ TotalAnnualMinCapacityInvestment(REGION,TECHNOLOGY,y) = 0 ;
 TotalTechnologyModelPeriodActivityUpperLimit(REGION,TECHNOLOGY) = 999999;
 TotalTechnologyModelPeriodActivityLowerLimit(REGION,TECHNOLOGY) = 0;
 TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y)$(TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y) = 0) = 999999;
+
+* Added for Guadeloupe
+TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Grass',y)=0;
+TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Wood',y)=0;
+TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Roundwood',y)=0;
+TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Paper_Cardboard',y)=0;
+TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Biogas',y)=0;
 
 TimeDepEfficiency(r,t,l,y)$(not TimeDepEfficiency(r,t,l,y)) = 1;
 
@@ -189,8 +196,10 @@ TagDispatchableTechnology('RES_Hydro_Small') = 0;
 Curtailment.fx(y,l,TransportFuels,r) = 0;
 Curtailment.up(y,l,'Heat_High_Industrial',r) = 1;
 Curtailment.up(y,l,'Heat_Medium_Industrial',r) = 1;
-Curtailment.up(y,l,'Heat_Low_Industrial',r) = 1;
-Curtailment.up(y,l,'Heat_Low_Residential',r) = 5;
+* Curtailment.up(y,l,'Heat_Low_Industrial',r) changed to zero for guadeloupe (default value = 1)
+Curtailment.up(y,l,'Heat_Low_Industrial',r) = 0;
+* Curtailment.up(y,l,'Heat_Low_Residential',r changed to zero for guadeloupe (deafual value = 5)
+Curtailment.up(y,l,'Heat_Low_Residential',r) = 0;
 Curtailment.up(y,l,'Heat_District',r) = 1;
 
 AnnualSectoralEmissionLimit(e,se,y)$(not AnnualSectoralEmissionLimit(e,se,y)) = 999999;
