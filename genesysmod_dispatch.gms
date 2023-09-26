@@ -1,12 +1,51 @@
-$if not set dispatch_year                $setglobal dispatch_year 2030
+* GENeSYS-MOD v3.1 [Global Energy System Model]  ~ March 2022
+*
+* #############################################################
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+* #############################################################
+
+$if not set dispatch_year                $setglobal dispatch_year 2050
 $if not set dispatch_base_region         $setglobal dispatch_base_region DE
 $if not set model_region                 $setglobal model_region europe
 $if not set switch_unixPath              $setglobal switch_unixPath 0
-$if not set switch_test_dataload         $setglobal switch_test_dataload 0
-$if not set solver                       $setglobal solver gurobi
+$if not set switch_threads               $setglobal switch_threads 6
+$if not set switch_test_data_load        $setglobal switch_test_data_load 0
 
 $if not set emissionPathway              $setglobal emissionPathway TechnoFriendly
 $if not set emissionScenario             $setglobal emissionScenario GlobalLimit
+
+**** Can be set to either "endogenous" (using value from GENeSYS-MOD run), or to a free value
+$if not set emissionsPenalty              $setglobal emissionsPenalty endogenous
+
+
+**** Price/Quantity Curve Calculations
+**** choose between transmission or h2, or set to zero
+$if not set switch_priceQuantityCurves    $setglobal switch_priceQuantityCurves h2
+
+**** Offset for domestic demand to generate price/quantity curves
+**** CAUTION: use positive/negative sign before the actual value; e.g. +1 / -2
+**** Demand Offset of 0 disables it entirely
+$if not set priceQuantity_region          $setglobal priceQuantity_region AT
+$if not set priceQuantity_quantity        $setglobal priceQuantity_quantity 2
+
+**** Settings for transmission price quantity curves
+**** Set type for analysis; imports or exports
+$if not set priceQuantity_type            $setglobal priceQuantity_type export
+
+**** Settings for h2 price quantity curves
+$if not set priceQuantity_use_base_file   $setglobal priceQuantity_use_base_file 1
 
 $ifthen %switch_unixPath% == 1
 $if not set inputdir                     $setglobal inputdir Inputdata/
@@ -19,6 +58,10 @@ $if not set gdxdir                       $setglobal gdxdir GdxFiles\
 $if not set dispatchdir                  $setglobal dispatchdir Dispatch\
 $if not set resultdir                    $setglobal resultdir Results\
 $endif
+scalar priceQuantityCurvesActive;
+$ifi %switch_priceQuantityCurves%=="h2"  priceQuantityCurvesActive=1;
+$ifi %switch_priceQuantityCurves%=="transmission"  priceQuantityCurvesActive=1;
+
 
 $gdxin dispatch_input
 
@@ -40,12 +83,10 @@ $loadm SECTOR
 $loadm YEAR_FULL
 $loadm YEAR
 $loadm TIMESLICE
-$loadm MODE_OF_OPERATION
 
 alias(TECHNOLOGY,t);
 alias(SECTOR,se);
 alias(YEAR,y,yy);
-alias(MODE_OF_OPERATION,m);
 
 
 $loadm REGION_FULL
@@ -85,9 +126,6 @@ CHP_Oil
 RES_Hydro_Large
 RES_Geothermal
 RES_Ocean
-P_Coal_Hardcoal_CCS
-P_Coal_Lignite_CCS
-P_Gas_CCS
 /;
 
 set VARIABLE_GENERATOR variable PP /
@@ -109,6 +147,8 @@ RES_Wind_Onshore_Opt
 RES_Wind_Onshore_Opt_H2
 /;
 
+
+
 alias(REGION_FULL,r_full,rr_full);
 alias(HOUR,h,hh);
 alias(STORAGE,sto);
@@ -119,8 +159,15 @@ set REGION(r_full);
 alias(REGION,r,rr);
 r(r_full) = yes;
 
-scalar co2_price /600/;
-scalar CalibrationSlack /0.1/;
+scalar co2_price /76/;
+$ifthen %emissionsPenalty% == "endogenous"
+parameter EmissionsPenalty;
+$loadm EmissionsPenalty
+co2_price = EmissionsPenalty('%dispatch_base_region%','CO2','%dispatch_year%');
+$else
+co2_price = %emissionsPenalty%;
+$endif
+
 
 parameter dispatchable_capacity(r_full,d) installed capacity of power plant p;
 parameter variable_capacity(r_full,v) installed capacity of variable power generator i;
@@ -145,11 +192,7 @@ variable TotalCapacityAnnual, TotalTradeCapacity, UseByTechnologyAnnual, NewStor
 $load TotalCapacityAnnual, TotalTradeCapacity, UseByTechnologyAnnual, NewStorageCapacity, StorageLevelTSStart
 
 parameter resourcecosts, AvailabilityFactor, CountryData, EmissionActivityRatio, EmissionContentPerFuel, TagTechnologyToSector, InputActivityRatio, SpecifiedAnnualDemand, OutputActivityRatio, OperationalLifeStorage, Yearval;
-parameter EmissionsPenalty, AnnualTechnologyProductionByMode;
 $load resourcecosts, AvailabilityFactor, CountryData, EmissionActivityRatio, EmissionContentPerFuel, TagTechnologyToSector, InputActivityRatio, SpecifiedAnnualDemand, OutputActivityRatio, OperationalLifeStorage, Yearval
-$load EmissionsPenalty, AnnualTechnologyProductionByMode
-
-co2_price$(EmissionsPenalty('%dispatch_base_region%','CO2','%dispatch_year%')) = EmissionsPenalty('%dispatch_base_region%','CO2','%dispatch_year%');
 
 ramping_factor('P_Biomass') = 0.04;
 ramping_factor('P_Biomass_CCS') = 0.04;
@@ -269,7 +312,19 @@ sector_demand(r,'Power') = SpecifiedAnnualDemand(r,'power','%dispatch_year%')/3.
 parameter sector_load_curve;
 sector_load_curve(r,h,se)$(sector_load_curve_sum(r,se)) = sector_demand(r,se)*sector_load_curve_raw(r,h,se)/sector_load_curve_sum(r,se);
 
+$ifthen %switch_priceQuantityCurves% == "h2"
+region('world') = no;
+*** Version, dass die Mengen länderübergreifend gemeinsam gesetzt werden
+demand(r,h) = sum(se$(not sameas(se,'Transformation')),sector_load_curve(r,h,se))+%priceQuantity_quantity%;
+*** Version, dass die Mengen je Land iteriert werden
+*demand(r,h) = sum(se,sector_load_curve(r,h,se));
+*demand('%priceQuantity_region%',h) = sum(se$(not sameas(se,'Transformation')),sector_load_curve('%priceQuantity_region%',h,se))+%priceQuantity_quantity%;
+$else
 demand(r,h) = sum(se,sector_load_curve(r,h,se));
+$endif
+
+
+
 
 storage_efficiency('S_PHS') = OutputActivityRatio('%dispatch_base_region%','D_PHS_Residual', 'Power', '2', '%dispatch_year%');
 storage_efficiency('S_Battery_Li-Ion') = OutputActivityRatio('%dispatch_base_region%','D_Battery_Li-Ion', 'Power', '2', '%dispatch_year%');
@@ -290,7 +345,6 @@ storage_capacity_e(r,sto)$(storage_startlevel(r,sto)>storage_capacity_e(r,sto)) 
 
 *storage_capacity_e(r,sto) = sum(yy$(yearval('%dispatch_year%')-yearval(yy) < OperationalLifeStorage(r,sto,yy) and yearval('%dispatch_year%')-yearval(yy) >= 0), NewStorageCapacity.l(sto,'%dispatch_year%',r))/31.536;
 
-*TotalCapacityAnnual.l('%dispatch_year%', 'D_CAES', r);
 
 positive variables
 DispatchableGeneration(r_full,d,h) disp generation in hour t
@@ -307,11 +361,8 @@ PowerFlow_positive(r_full,rr_full,h) positive trade flow from regions r to rr
 PowerFlow_negative(r_full,rr_full,h) negative trade flow from regions r to rr
 
 InfeasibleGeneration(r_full,h) infeasibilty generation
+InfeasibleGeneration_neg(r_full,h) infeasibilty generation (negative);
 ;
-
-*Storage_SOC.fx(r,sto,h)$(ord(h) > 0 and mod(ord(h)-0,96) = 0) = 0;
-*Storage_SOC.up(r,'S_CAES',h) = +INF;
-*Storage_SOC.up(r,'S_PHS',h) = +INF;
 
 parameter StorageLosses(sto);
 StorageLosses('S_PHS') = 0;
@@ -342,6 +393,35 @@ r('World') = no;
 *r('CH') = yes;
 *r('CZ') = yes;
 
+parameter readin_transmission_capacity;
+readin_transmission_capacity(r,rr) = 0;
+
+transmission_capacity(r,rr)$(transmission_capacity(r,rr)<readin_transmission_capacity(r,rr)) = readin_transmission_capacity(r,rr);
+
+$ifthen.h2 %switch_priceQuantityCurves% == "h2"
+$ifthen.basefile %priceQuantity_use_base_file% == 1
+
+$Ifthen exist 01_Baseline_%dispatch_year%.gdx $setglobal base_file_available 1
+$gdxin 01_Baseline_%dispatch_year%.gdx
+$onundf
+$loadm PowerFlow
+PowerFlow.fx(r,rr,h) = round(PowerFlow.l(r,rr,h),5);
+transmission_capacity(r,rr) = transmission_capacity(r,rr)+0.001;
+display "base file found, reading powerflows from base file...";
+$else display "base file was not found, recomputing power flows...";
+$setglobal base_file_available 2
+$endif
+$else.basefile
+$setglobal base_file_available 2
+display "base file will not be used, pre-computing power flows instead";
+$endif.basefile
+$endif.h2
+
+
+$ifthen %switch_test_data_load% == 0
+
+
+
 equation NE0_Obj;
 NE0_Obj..
   sum((r,d,h),DispatchableGeneration(r,d,h)*variable_costs(r,d))
@@ -349,7 +429,7 @@ NE0_Obj..
 + sum((r,sto,h),Storage_Out(r,sto,h))*eps
 + sum((r,h),Curtailment(r,h))*eps
 + sum((r,rr,h),PowerFlow_positive(r,rr,h) + PowerFlow_negative(r,rr,h))*eps
-+ infeasibility_penalty*sum((r,h),InfeasibleGeneration(r,h))
++ infeasibility_penalty*sum((r,h),InfeasibleGeneration(r,h)+InfeasibleGeneration_neg(r,h))
   =e= z;
 
 equation NE2a_DispGeneration1(r_full,d,h);
@@ -434,6 +514,23 @@ PowerFlow.fx(r,rr,h)$(transmission_capacity(r,rr) = 0) = 0;
 PowerFlow_positive.fx(r,rr,h)$(transmission_capacity(r,rr) = 0) = 0;
 PowerFlow_negative.fx(r,rr,h)$(transmission_capacity(r,rr) = 0) = 0;
 
+*** Offset demand for one specific region if needed
+$ifthen %switch_priceQuantityCurves% == "transmission"
+parameter tag_import;
+tag_import =
+$ifi %priceQuantity_type% == "import" 1 +
+$ifi %priceQuantity_type% == "export" -1 +
+0;
+
+demand('%priceQuantity_region%',h) = 0;
+
+
+equation Add_PriceQuantityConstraint(h);
+Add_PriceQuantityConstraint(h)..  sum(rr,PowerFlow(rr,'%priceQuantity_region%',h))+InfeasibleGeneration('%priceQuantity_region%',h)-InfeasibleGeneration_neg('%priceQuantity_region%',h) =e=  %priceQuantity_quantity%*tag_import;
+
+$endif
+
+
 equation NEB1_EnergyBalance(r_full,h);
 NEB1_EnergyBalance(r,h)$(demand(r,h))..
   sum((d),DispatchableGeneration(r,d,h))
@@ -446,30 +543,10 @@ NEB1_EnergyBalance(r,h)$(demand(r,h))..
   demand(r,h)
 + Curtailment(r,h);
 
-parameter AnnualProductionvalue;
-AnnualProductionvalue(r,d) = sum((m),AnnualTechnologyProductionByMode(r,d,m,'Power','%dispatch_year%'))/3.6*1000;
-
-
-equation CA1a_SetAnnualBalanceToModelResults_Dispatchable_Up(r_full,d);
-CA1a_SetAnnualBalanceToModelResults_Dispatchable_Up(r,d).. sum(h,DispatchableGeneration(r,d,h)) =g= (1-CalibrationSlack)*AnnualProductionvalue(r,d);
-
-equation CA1b_SetAnnualBalanceToModelResults_Dispatchable_Lo(r_full,d);
-CA1b_SetAnnualBalanceToModelResults_Dispatchable_Lo(r,d).. sum(h,DispatchableGeneration(r,d,h)) =l= (1.05+CalibrationSlack)*AnnualProductionvalue(r,d);
-
-parameter check_DispatchableTechs(d);
-check_DispatchableTechs(d)$(sum(t,diag(d,t))) = 1;
-parameter check_VariableTechs(v);
-check_VariableTechs(v)$(sum(t,diag(v,t))) = 1;
-parameter check_MissingTechs(t);
-check_MissingTechs(t)$(not sum(v,diag(v,t)) and not sum(d,diag(d,t))) = 1;
-parameter check_MissingDispatchableMapping(d);
-check_MissingDispatchableMapping(d)$(not sum(t,diag(d,t))) = 1;
-parameter check_MissingVariableMapping(v);
-check_MissingVariableMapping(v)$(not sum(t,diag(v,t))) = 1;
 
 
 option
-lp = %solver%
+lp = gurobi
 limrow = 0
 limcol = 0
 solprint = off
@@ -482,8 +559,15 @@ method 2
 *names no
 barhomogeneous 1
 timelimit 1000000
-threads 6
+threads %switch_threads%
 $offecho
+
+$ifthen %base_file_available% == 2
+demand(r,h) = sum(se,sector_load_curve(r,h,se));
+display "Using baseline demands for all regions for first iteration"
+$endif
+
+
 
 model dispatch /
 NE0_Obj
@@ -503,14 +587,51 @@ NF2a_NtcPos
 NF2b_NtcNeg
 NF3_AbsoluteFlowHelper
 NEB1_EnergyBalance
-CA1a_SetAnnualBalanceToModelResults_Dispatchable_Up
-CA1b_SetAnnualBalanceToModelResults_Dispatchable_Lo
+$ifi %switch_priceQuantityCurves% == "transmission" Add_PriceQuantityConstraint
 /;
 
 dispatch.holdfixed = 1;
 dispatch.optfile = 1;
-$ifthen %switch_test_dataload% == 0
+
 solve dispatch using LP min z;
+
+$ifthen %base_file_available% == 2
+display "writing new base file to use for next time";
+execute_unload "01_Baseline_%dispatch_year%.gdx"
+demand
+sector_load_curve
+PowerFlow;
+
+model dispatch2 /
+NE0_Obj
+NE2a_DispGeneration1
+NE2b_DispGenerationMinActivity
+NE2c_VarGeneration
+NE3_StorageSOC
+NE4a_StorageST_IN_p
+NE4b_StorageST_OUT_p
+NE5a_StorageST_OUT_soc
+NE5a_StorageST_IN_soc
+NR1_ProductionChange
+NR2_RampingUpLimit
+NR3_RampingDownLimit
+NF1_ReverseFlow
+NF2a_NtcPos
+NF2b_NtcNeg
+NF3_AbsoluteFlowHelper
+NEB1_EnergyBalance
+$ifi %switch_priceQuantityCurves% == "transmission" Add_PriceQuantityConstraint
+/;
+
+PowerFlow.fx(r_full,rr_full,h) = PowerFlow.l(r_full,rr_full,h);
+demand(r,h) = sum(se$(not sameas(se,'Transformation')),sector_load_curve(r,h,se))+%priceQuantity_quantity%;
+
+display "computing second stage with fixed power flows"
+*dispatch2.holdfixed = 1;
+*dispatch2.optfile = 1;
+solve dispatch2 using LP min z;
+
+$endif
 
 parameter output;
 
@@ -523,11 +644,28 @@ output('s_in',r,sto,h) = -Storage_In.l(r,sto,h);
 output('s_out',r,sto,h) = Storage_Out.l(r,sto,h);
 output('flow',r,'flow',h) = sum(rr,PowerFlow.l(rr,r,h));
 
+$ifthen %priceQuantity_quantity% == 0
 execute_unload "%gdxdir%%dispatchdir%Output_dispatch_%dispatch_year%_%model_region%_%emissionPathway%_%emissionScenario%.gdx"
+output;
+execute_unload "%gdxdir%%dispatchdir%Output_marginalcosts_%dispatch_year%_%model_region%_%emissionPathway%_%emissionScenario%.gdx"
+$ifi %switch_priceQuantityCurves%=="transmission" Add_PriceQuantityConstraint
+NEB1_EnergyBalance;
+$elseif set output_filename
+execute_unload "%gdxdir%%dispatchdir%%output_filename%.gdx"
 output
-;
+NEB1_EnergyBalance;
+$elseif not set output_filename
+execute_unload "%gdxdir%%dispatchdir%Output_dispatch_%dispatch_year%_%model_region%_%emissionPathway%_%emissionScenario%_%priceQuantity_region%_%priceQuantity_type%%priceQuantity_quantity%.gdx"
+output;
+execute_unload "%gdxdir%%dispatchdir%Output_marginalcosts_%dispatch_year%_%model_region%_%emissionPathway%_%emissionScenario%_%priceQuantity_region%_%priceQuantity_type%%priceQuantity_quantity%.gdx"
+NEB1_EnergyBalance;
+$endif
 
+$ifthen %switch_unixPath% == 0
+$ifthen %priceQuantity_quantity% == 0
 execute "gdxdump %gdxdir%%dispatchdir%Output_dispatch_%dispatch_year%_%model_region%_%emissionPathway%_%emissionScenario%.gdx output=%resultdir%%dispatchdir%Output_dispatch_%dispatch_year%_%model_region%_%emissionPathway%_%emissionScenario%.csv symb=output format=csv"
-
 $else
+execute "gdxdump %gdxdir%%dispatchdir%Output_dispatch_%dispatch_year%_%model_region%_%emissionPathway%_%emissionScenario%_%priceQuantity_region%_%priceQuantity_type%%priceQuantity_quantity%.gdx output=%resultdir%%dispatchdir%Output_dispatch_%dispatch_year%_%model_region%_%emissionPathway%_%emissionScenario%_%priceQuantity_region%_%priceQuantity_type%%priceQuantity_quantity%.csv symb=output format=csv"
+$endif
+$endif
 $endif

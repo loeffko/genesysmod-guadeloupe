@@ -17,3 +17,9 @@ Results/large/output_technology_costs_detailed.csv
 Results/large/output_transmission_capacity.csv
 Results/large/test.gdx
 Results/large/merged.gdx
+*.dat
+225*
+osigurobi.opt
+gurobi.opt
+cplex.opt
+*.gpr

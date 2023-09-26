@@ -1,15 +1,6 @@
-* ###################### genesysmod_interpolation.gms #######################
-*
 * GENeSYS-MOD v3.1 [Global Energy System Model]  ~ March 2022
 *
-* Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
-*
-* Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
-*
 * #############################################################
-*
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -27,7 +18,6 @@
 
 
 Yearsplit(l,y)$(Yearsplit(l,y) = 0) = Yearsplit(l,y-1);
-Daysplit(y,l)$(Daysplit(y,l) = 0) = Daysplit(y,l-1);
 
 
 ReserveMarginTagFuel(r,f,y)$(ReserveMarginTagFuel(r,f,y) = 0) = ReserveMarginTagFuel(r,f,y-1);
@@ -39,7 +29,7 @@ RegionalAnnualEmissionLimit(r,e,y)$(RegionalAnnualEmissionLimit(r,e,y) = 0 and R
 AnnualEmissionLimit(e,y)$(AnnualEmissionLimit(e,y) = 0 and AnnualEmissionLimit(e,y+1) > 0) = (AnnualEmissionLimit(e,y-1)+AnnualEmissionLimit(e,y+1))/2;
 AnnualSectoralEmissionLimit(e,se,y)$(AnnualSectoralEmissionLimit(e,se,y)=0 and AnnualSectoralEmissionLimit(e,se,y+1) > 0) =  (AnnualSectoralEmissionLimit(e,se,y-1)+AnnualSectoralEmissionLimit(e,se,y+1))/2;
 
-ModalSplitByFuelandModalType(r,f,y,mt)$(ModalSplitByFuelandModalType(r,f,y,mt) = 0 and ModalSplitByFuelandModalType(r,f,y+1,mt) > 0 and ord(y)>1) =  (ModalSplitByFuelandModalType(r,f,y-1,mt)+ModalSplitByFuelandModalType(r,f,y+1,mt))/2 ;
+ModalSplitByFuelandModalType(r,f,y,mt)$(ModalSplitByFuelandModalType(r,f,y,mt) = 0 and ModalSplitByFuelandModalType(r,f,y+1,mt) > 0 and YearVal(y)>%year%) =  (ModalSplitByFuelandModalType(r,f,y-1,mt)+ModalSplitByFuelandModalType(r,f,y+1,mt))/2 ;
 
 
 InputActivityRatio(r,t,f,m,y)$(InputActivityRatio(r,t,f,m,y) = 0) = InputActivityRatio(r,t,f,m,y-1);

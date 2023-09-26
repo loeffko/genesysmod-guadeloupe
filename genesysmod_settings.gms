@@ -1,15 +1,6 @@
-* ###################### genesysmod_settings.gms #######################
-*
 * GENeSYS-MOD v3.1 [Global Energy System Model]  ~ March 2022
 *
-* Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
-*
-* Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
-*
 * #############################################################
-*
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -29,13 +20,10 @@
 
 * ################### CHOOSE CALCULATED YEARS ###################
 ***  TO LEAVE OUT A CERTAIN YEAR, REMOVE COMMENT OF RESPECTIVE LINE ***
-y('2015') = no;
-*y('2017') = no;
-*y('2018') = no;
-*y('2022') = no;
-*y('2015') = no;
+
 *y('2018') = no;
 y('2020') = no;
+*y('2022') = no;
 *y('2025') = no;
 *y('2030') = no;
 *y('2035') = no;
@@ -45,28 +33,21 @@ y('2020') = no;
 
 * ################### OTHER GENERAL INPUTS ###################
 
-DepreciationMethod(r) = 1;
+DepreciationMethod = 1;
 GeneralDiscountRate(r) = 0.05;
-TechnologyDiscountRate(r,Companies) = 0.05;
-TechnologyDiscountRate(r,Companies) = 0.05;
-TechnologyDiscountRate(r,Households) = 0.05;
-SocialDiscountRate(r) = %socialdiscountrate%;
-DaysInDayType(y,ls,ld) = 7;
+TechnologyDiscountRate(r,t)$(TagTechnologyToSubsets(t,'Households')) = 0.05;
+TechnologyDiscountRate(r,t)$(not TagTechnologyToSubsets(t,'Households')) = 0.05;
+SocialDiscountRate(r) = 0.05;
+
 
 scalar InvestmentLimit  Freedom for investment choices to spread across periods. A value of 1 would mean equal share for each period.
                       /1.9/;
 scalar NewRESCapacity /0.1/;
-ProductionGrowthLimit(y,'Power')=0.05;
-ProductionGrowthLimit(y,HeatFuels)=0.05;
-ProductionGrowthLimit(y,TransportFuels)=0.05;
-ProductionGrowthLimit(y,'Air')=0.025;
+ProductionGrowthLimit(y,'Power') = 0.05;
+ProductionGrowthLimit(y,f)$(TagFuelToSubsets(f,'HeatFuels')) = 0.05;
+ProductionGrowthLimit(y,f)$(TagFuelToSubsets(f,'TransportFuels')) = 0.05;
+ProductionGrowthLimit(y,'Air') = 0.025;
 scalar StorageLimitOffset /0.015/;
-
-
-
-scalar Trajectory2020UpperLimit /3/;
-scalar Trajectory2020LowerLimit /0.7/;
-GrowthRateTradeCapacity(y,'Power',r,rr) = 0.1;
 
 BaseYearSlack(f) = 0.035;
 BaseYearSlack('Power') = 0.035;

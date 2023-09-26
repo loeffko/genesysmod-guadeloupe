@@ -26,35 +26,30 @@
 * #############################################################
 
 
-CapacityFactor(r,'RES_PV_Rooftop_Commercial',l,y) = CapacityFactor(r,'RES_PV_Utility_Avg',l,y) ;
-CapacityFactor(r,'RES_PV_Rooftop_Residential',l,y) = CapacityFactor(r,'RES_PV_Utility_Avg',l,y) ;
-CapacityFactor(r,'HLR_Solar_Thermal',l,y) = CapacityFactor(r,'RES_PV_Utility_Avg',l,y) ;
-CapacityFactor(r,'HLI_Solar_Thermal',l,y) = CapacityFactor(r,'RES_PV_Utility_Avg',l,y) ;
-
 AvailabilityFactor(r,'HLI_Geothermal',y) = 0;
 
 TotalTechnologyAnnualActivityUpperLimit(r,'HHI_Scrap_EAF',y) = 0.7*SpecifiedAnnualDemand(r,'Heat_High_Industrial',y);
 
 ReserveMargin(r,y) = 0;
 
-AdditionalTradeCapacity(y,f,r,rr) = 0;
+CommissionedTradeCapacity(y,f,r,rr) = 0;
 
 
 *
 * ####### Dispatch and Curtailment #############
 *
-TagDispatchableTechnology(TECHNOLOGY) = 1;
-TagDispatchableTechnology(Solar) = 0;
-TagDispatchableTechnology(Wind) = 0;
-AvailabilityFactor(REGION,Solar,y) = 1;
-TagDispatchableTechnology(Passenger) = 0;
-Curtailment.fx(y,l,TransportFuels,r) = 0;
+*TagDispatchableTechnology(TECHNOLOGY) = 1;
+*TagDispatchableTechnology(Solar) = 0;
+*TagDispatchableTechnology(Wind) = 0;
+*AvailabilityFactor(REGION,Solar,y) = 1;
+*TagDispatchableTechnology(Passenger) = 0;
+*Curtailment.fx(y,l,TransportFuels,r) = 0;
 
 
-parameter VariableRES(t);
-VariableRES(Solar) = 1;
-VariableRES(Wind) = 1;
-VariableRES('Res_Hydro_Small') = 1;
+*parameter VariableRES(t);
+*VariableRES(Solar) = 1;
+*VariableRES(Wind) = 1;
+*VariableRES('Res_Hydro_Small') = 1;
 
 AvailabilityFactor(r,'RES_Hydro_Small',y) = 1;
 
@@ -67,10 +62,6 @@ GasFuels('Gas_Bio') = yes;
 GasFuels('Gas_Synth') = yes;
 GasFuels('H2') = yes;
 
-TotalAnnualMaxCapacity(r,ImportTechnology,y) = 999999;
-CapacityFactor(r,ImportTechnology,l,y) = 1 ;
-OperationalLife(r,ImportTechnology) = 1 ;
-TotalTechnologyModelPeriodActivityUpperLimit(r,ImportTechnology) = 999999;
 
 AvailabilityFactor(r,'X_Liquifier',y)$(YearVal(y) > 2015) = 1;
 AvailabilityFactor(r,'X_Gasifier',y)$(YearVal(y) > 2015) = 1;
@@ -89,7 +80,9 @@ TrPl1a_TradeCapacityPipelinesLines(y,l,r,rr).. sum(GasFuels$(TradeRoute(y,GasFue
 * ############## Additions for NTNU Guadeloupe study
 *
 
-AvailabilityFactor(r,CHPs,y) = 0;
+AvailabilityFactor(r,t,y)$(TagTechnologyToSubsets(t,'CHP')) = 0;
+*AvailabilityFactor(r,'PSNG_Rail_Electric',y) = 0;
+AvailabilityFactor(r,'PSNG_Rail_Conv',y) = 0;
 
 *NewCapacity.lo('2018','HLR_Solar_Thermal','MarieGalante') = 3;
 *NewCapacity.lo('2018','D_Heat_HLR','MarieGalante') = 2;
@@ -117,3 +110,6 @@ UseByTechnologyAnnual.up(y,t,FossilFuels,r)$(not sum(CCS,diag(t,CCS)) and YearVa
 *AnnualEmissionLimit should be defined
 $endif
 
+
+*InputActivityRatio(r,'HLR_Solar_Thermal',f,m,y) = 0;
+*TagDispatchableTechnology('HLR_Solar_Thermal') = 1;

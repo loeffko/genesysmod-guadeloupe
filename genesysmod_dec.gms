@@ -1,15 +1,6 @@
-* ###################### genesysmod_dec.gms #######################
-*
 * GENeSYS-MOD v3.1 [Global Energy System Model]  ~ March 2022
 *
-* Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
-*
-* Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
-*
 * #############################################################
-*
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -24,73 +15,50 @@
 * limitations under the License.
 *
 * #############################################################
-
-
-
 $offOrder
 
-$ifthen.dec_timeseries %timeseries% == elmod
-set TIMESLICE_FULL /1*8760/;
+set TIMESLICE_FULL Every hour of the year /1*8760/;
 alias (l_full,ll_full,TIMESLICE_FULL);
 
-set DAILYTIMEBRACKET /1*24/;
-alias (lh,DAILYTIMEBRACKET,lhlh);
-
-$else.dec_timeseries
-set HOUR /1*8760/
-alias (h,hh,HOUR);
-
-set TIMESLICE_FULL /Q1M,Q1P,Q1A,Q1N,Q2M,Q2P,Q2A,Q2N,Q3M,Q3P,Q3A,Q3N,Q4M,Q4P,Q4A,Q4N/;
-alias (l_full,ll_full,TIMESLICE_FULL);
-
-set DAILYTIMEBRACKET;
-alias (lh,DAILYTIMEBRACKET,lhlh);
-$endif.dec_timeseries
-
-set TIMESLICE(l_full);
+set TIMESLICE(l_full) Subset of hours that got chosen via the timeseries reduction algorithm;
 alias (l,ll,TIMESLICE);
 
-Set YEAR_FULL /2015*2100/;
+Set YEAR_FULL All possible years inside GENeSYS-MOD /2015*2100/;
 alias (y_full, yy_full, YEAR_FULL);
 
-set YEAR(y_full);
+set YEAR(y_full) All years for which computation should actually happen;
 alias (y,yy,YEAR);
 
-set REGION_FULL ;
+set REGION_FULL All regions included in the input data;
 alias (REGION_FULL,r_full,rr_full);
 
-set REGION(REGION_FULL);
+set REGION(REGION_FULL) Subset of regions for which computation should actually happen;
 alias (REGION,r,rr)
 
-set TECHNOLOGY /Infeasibility_Power,
+set TECHNOLOGY List of all available technologies
+               /Infeasibility_Power,
                 Infeasibility_HLI,
                 Infeasibility_HMI,
                 Infeasibility_HHI,
-                Infeasibility_HLR,
+                Infeasibility_HRI,
                 Infeasibility_Mob_Passenger,
                 Infeasibility_Mob_Freight /;
 alias (t,TECHNOLOGY);
 
-set DummyTechnology(TECHNOLOGY);
+set DummyTechnology(TECHNOLOGY) Subset of technologies that serve as infeasibility helpers;
 
-set FUEL;
+set FUEL List of all fuels or energy carriers;
 alias (f,ff,FUEL);
-set SECTOR /Infeasibility/;
+set SECTOR List of all sectors /Infeasibility/;
 alias (se,sse,SECTOR);
-set EMISSION;
+set EMISSION All considered emissions;
 alias (e,EMISSION);
-set MODE_OF_OPERATION ;
+set MODE_OF_OPERATION List of possible operation modes for the different technologies;
 alias (m,MODE_OF_OPERATION);
-set STORAGE;
+set STORAGE List of different storage technologies in GENeSYS-MOD;
 alias (s,STORAGE);
-set SEASON;
-alias (ls,SEASON);
-set DAYTYPE;
-alias (ld,DAYTYPE);
-set DAILYTIMEBRACKET;
-alias (lh,DAILYTIMEBRACKET,lhlh);
 
-set MODALTYPE;
+set MODALTYPE List of all modal types for transport;
 alias (mt,MODALTYPE);
 
 *
@@ -101,20 +69,19 @@ alias (mt,MODALTYPE);
 * ####### Global #############
 *
 parameter StartYear Defines the first year of the modeling horizon;
-parameter YearSplit(TIMESLICE_FULL,y_full);
-parameter GeneralDiscountRate(REGION_FULL);
-parameter SocialDiscountRate(REGION_FULL);
-parameter TechnologyDiscountRate(REGION_FULL,TECHNOLOGY);
+parameter YearSplit(TIMESLICE_FULL,y_full) Defines the length of one timeslice as a fraction of the year. Unit: Percent;
+parameter GeneralDiscountRate(REGION_FULL) Defines the discountrate to be used for general infrastructure investments. Unit: Percent;
+parameter SocialDiscountRate(REGION_FULL) Defines the discountrate to be used for negative externalities for emissions. Unit: Percent;
+parameter TechnologyDiscountRate(REGION_FULL,TECHNOLOGY) Defines the discountrate to be used for technology investments. Unit: Percent;
+parameter DepreciationMethod Defines the method to use for depreciation of assets. Options: 1 or 2;
 
 *
 * ####### Demands #############
 *
-parameter SpecifiedAnnualDemand(REGION_FULL,FUEL,y_full);
-parameter SpecifiedDemandProfile(REGION_FULL,FUEL,TIMESLICE_FULL,y_full);
+parameter SpecifiedAnnualDemand(REGION_FULL,FUEL,y_full) Defines the total demand for a fuel (either in energy or a proxy) across the year. Unit: PJ or km;
+parameter SpecifiedDemandProfile(REGION_FULL,FUEL,TIMESLICE_FULL,y_full) Defines the relative demand per timeslice as a fraction of the total annual demand. Unit: Percent;
 parameter RateOfDemand(y_full,TIMESLICE_FULL,FUEL,REGION_FULL) Rate of demand in given timeslice. Unit: GW;
-parameter Demand(y_full,TIMESLICE_FULL,FUEL,REGION_FULL);
-*parameter AccumulatedAnnualDemand(REGION_FULL,FUEL,y_full);
-parameter DepreciationMethod(REGION_FULL);
+parameter Demand(y_full,TIMESLICE_FULL,FUEL,REGION_FULL) Fuel demand for each timeslice. Unit: PJ (except for transport);
 
 *
 * ######## Technology Performance #############
@@ -132,6 +99,9 @@ parameter BaseYearProduction(TECHNOLOGY,FUEL,YEAR_FULL);
 parameter RegionalBaseYearProduction(REGION_FULL,TECHNOLOGY,FUEL,YEAR_FULL);
 parameter TagElectricTechnology(TECHNOLOGY);
 parameter TimeDepEfficiency(REGION_FULL,TECHNOLOGY,TIMESLICE_FULL,YEAR_FULL) Time dependent efficiency for heatpumps;
+parameter TagTechnologyToSubsets(TECHNOLOGY,*);
+parameter TagFuelToSubsets(FUEL,*);
+
 
 parameter RegionalCCSLimit(REGION_FULL);
 
@@ -194,8 +164,8 @@ parameter ReserveMargin(REGION_FULL,YEAR_FULL);
 *
 * ######## RE Generation Target ############
 *
-parameter RETagTechnology(REGION_FULL,TECHNOLOGY,YEAR_FULL);
-parameter RETagFuel(REGION_FULL,FUEL,YEAR_FULL);
+parameter RETagTechnology(TECHNOLOGY,YEAR_FULL);
+parameter RETagFuel(FUEL,YEAR_FULL);
 parameter REMinProductionTarget(REGION_FULL,FUEL,YEAR_FULL);
 
 *
@@ -211,7 +181,7 @@ parameter RegionalAnnualEmissionLimit(REGION_FULL,EMISSION,YEAR_FULL);
 parameter ModelPeriodExogenousEmission(REGION_FULL,EMISSION);
 parameter ModelPeriodEmissionLimit(EMISSION);
 parameter RegionalModelPeriodEmissionLimit(EMISSION,REGION_FULL);
-parameter CurtailmentCostFactor(REGION_FULL,FUEL,YEAR_FULL);
+parameter CurtailmentCostFactor;
 
 *
 * ######### Trade #############
@@ -223,21 +193,12 @@ parameter TradeRouteInstalledCapacity(y_full,f,r_full,rr_full);
 parameter TradeLossBetweenRegions(y_full,FUEL,REGION_FULL,RR_FULL);
 
 
-parameter AdditionalTradeCapacity(y_full,f,r_full,rr_full);
+parameter CommissionedTradeCapacity(y_full,f,r_full,rr_full);
 parameter TradeCapacity(y_full,f,r_full,rr_full);
 parameter TradeCapacityGrowthCosts(f, r_full, rr_full);
 parameter GrowthRateTradeCapacity(y_full, f, r_full, rr_full);
 
 parameter SelfSufficiency(y_full, fuel, r_full);
-
-*
-* ######### Time Slice Conversion #############
-*
-parameter Conversionls(TIMESLICE_FULL,ls);
-parameter Conversionld(TIMESLICE_FULL,ld);
-parameter Conversionlh(TIMESLICE_FULL,lh);
-parameter DaySplit(y_full,TIMESLICE_FULL);
-parameter DaysInDayType(y_full,SEASON,DAYTYPE);
 
 *
 * ######### Transportation #############
@@ -262,36 +223,16 @@ positive variable TotalCapacityAnnual(y_full,TECHNOLOGY,REGION_FULL);
 *
 positive variable RateOfActivity(y_full,TIMESLICE_FULL,TECHNOLOGY,MODE_OF_OPERATION,REGION_FULL);
 
-*positive variable RateOfTotalActivity(y_full,TIMESLICE_FULL,TECHNOLOGY,REGION_FULL);
-
 positive variable TotalTechnologyAnnualActivity(y_full,TECHNOLOGY,REGION_FULL);
 
 positive variable TotalAnnualTechnologyActivityByMode(y_full,TECHNOLOGY,MODE_OF_OPERATION,REGION_FULL);
 
-*positive variable RateOfProductionByTechnologyByMode(y_full,TIMESLICE_FULL,TECHNOLOGY,MODE_OF_OPERATION,FUEL,REGION_FULL);
-*positive variable RateOfUseByTechnologyByMode(y_full,TIMESLICE_FULL,TECHNOLOGY,MODE_OF_OPERATION,FUEL,REGION_FULL);
-
-*positive variable RateOfProductionByTechnology(y_full,TIMESLICE_FULL,TECHNOLOGY,FUEL,REGION_FULL);
-*positive variable RateOfUseByTechnology(y_full,TIMESLICE_FULL,TECHNOLOGY,FUEL,REGION_FULL);
-
-*positive variable ProductionByTechnology(y_full,TIMESLICE_FULL,TECHNOLOGY,FUEL,REGION_FULL);
-*positive variable UseByTechnology(y_full,TIMESLICE_FULL,TECHNOLOGY,FUEL,REGION_FULL);
-
-*positive variable RateOfProduction(y_full,TIMESLICE_FULL,FUEL,REGION_FULL);
-*positive variable RateOfUse(y_full,TIMESLICE_FULL,FUEL,REGION_FULL);
-
 positive variable ProductionByTechnologyAnnual(y_full,TECHNOLOGY,FUEL,REGION_FULL);
 positive variable UseByTechnologyAnnual(y_full,TECHNOLOGY,FUEL,REGION_FULL);
 
-*positive variable Production(y_full,TIMESLICE_FULL,FUEL,REGION_FULL);
-*positive variable Use(y_full,TIMESLICE_FULL,FUEL,REGION_FULL);
-
-*positive variable ProductionAnnual(y_full,FUEL,REGION_FULL);
-*positive variable UseAnnual(y_full,FUEL,REGION_FULL);
-
 positive variable TotalActivityPerYear(REGION_FULL,TIMESLICE_FULL,TECHNOLOGY,YEAR_FULL);
-positive variable Curtailment(y_full,TIMESLICE_FULL,f,r_full);
-positive variable CurtailmentAnnual(y_full,f,r_full);
+positive variable CurtailedEnergyAnnual(y_full,f,r_full);
+positive variable CurtailedCapacity(REGION_FULL,TIMESLICE_FULL,TECHNOLOGY,YEAR_FULL);
 positive variable DispatchDummy(r_full,TIMESLICE_FULL,t,y_full);
 
 *
@@ -308,7 +249,6 @@ positive variable AnnualFixedOperatingCost(y_full,TECHNOLOGY,REGION_FULL);
 positive variable VariableOperatingCost(y_full,TIMESLICE_FULL,TECHNOLOGY,REGION_FULL);
 positive variable TotalDiscountedCost(y_full,REGION_FULL);
 positive variable TotalDiscountedCostByTechnology(y_full,TECHNOLOGY,REGION_FULL)
-positive variable ModelPeriodCostByRegion (REGION_FULL);
 
 positive variable AnnualCurtailmentCost(YEAR_FULL,FUEL,REGION_FULL);
 positive variable DiscountedAnnualCurtailmentCost(YEAR_FULL,FUEL,REGION_FULL);
@@ -316,18 +256,10 @@ positive variable DiscountedAnnualCurtailmentCost(YEAR_FULL,FUEL,REGION_FULL);
 
 *
 * ############### Storage Variables #############
-*
-free variable  RateOfStorageCharge(s,y_full,ls,ld,lh,REGION_FULL);
-free variable  RateOfStorageDischarge(s,y_full,ls,ld,lh,REGION_FULL);
-free variable  NetChargeWithinYear(s,y_full,ls,ld,lh,REGION_FULL);
-free variable  NetChargeWithinDay(s,y_full,ls,ld,lh,REGION_FULL);
 positive variable StorageLevelYearStart(s,y_full,REGION_FULL);
 positive variable StorageLevelTSStart(s,y_full,TIMESLICE_FULL,REGION_FULL);
 
 positive variable StorageLevelYearFinish(s,y_full,REGION_FULL);
-positive variable StorageLevelSeasonStart(s,y_full,ls,REGION_FULL);
-positive variable StorageLevelDayTypeStart(s,y_full,ls,ld,REGION_FULL);
-positive variable StorageLevelDayTypeFinish(s,y_full,ls,ld,REGION_FULL);
 positive variable StorageLowerLimit(s,y_full,REGION_FULL);
 positive variable StorageUpperLimit(s,y_full,REGION_FULL);
 positive variable AccumulatedNewStorageCapacity(s,y_full,REGION_FULL);
@@ -391,9 +323,6 @@ free variable DiscountedAnnualTotalTradeCosts(y_full,REGION_FULL);
 * ######### Transportation #############
 *
 
-parameter TrajectoryLowerLimit(y_full);
-parameter TrajectoryUpperLimit(y_full);
-
 positive variable DemandSplitByModalType(MODALTYPE,TIMESLICE_FULL,REGION_FULL,FUEL,YEAR_FULL);
 positive variable ProductionSplitByModalType(MODALTYPE,TIMESLICE_FULL,REGION_FULL,FUEL,YEAR_FULL);
 
@@ -401,10 +330,10 @@ $ifthen.dec_ramping %switch_ramping% == 1
 *
 * ######## Ramping #############
 *
-parameter RampingUpFactor(REGION_FULL,TECHNOLOGY,y_full);
-parameter RampingDownFactor(REGION_FULL,TECHNOLOGY,y_full);
+parameter RampingUpFactor(TECHNOLOGY,y_full);
+parameter RampingDownFactor(TECHNOLOGY,y_full);
 
-parameter ProductionChangeCost(REGION_FULL,TECHNOLOGY,y_full);
+parameter ProductionChangeCost(TECHNOLOGY,y_full);
 
 parameter MinActiveProductionPerTimeslice(YEAR_FULL,TIMESLICE_FULL,FUEL,TECHNOLOGY,REGION_FULL);
 
@@ -474,3 +403,5 @@ parameter SupplyJobs;
 parameter CoalJobs;
 parameter output_energyjobs;
 $endif
+
+

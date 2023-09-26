@@ -1,15 +1,6 @@
-* ###################### genesysmod_timeseries_reduction.gms #######################
-*
 * GENeSYS-MOD v3.1 [Global Energy System Model]  ~ March 2022
 *
-* Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
-*
-* Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
-*
 * #############################################################
-*
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -141,7 +132,7 @@ iterator /1/
 ;
 
 *insert the Dunkelflaute
-while(iterator lt 24 and card(l) le 500,
+while(iterator lt 24 and card(l_full) lt 500,
 l(l_full)$(ord(l_full) = (((24 - %elmod_starthour%) * %elmod_nthhour% + %elmod_starthour%) + iterator)) = yes;
 
 Dunkelflaute(r_full,l_full,'pv_inf')$(ord(l_full) = (((24 - %elmod_starthour%) * %elmod_nthhour% + %elmod_starthour%) + iterator)) = 0.5;
@@ -269,7 +260,7 @@ smoothing_range('heat_pump_air') = 3;
 smoothing_range('heat_pump_ground') = 3;
 smoothing_range('hydro_ror') = 3;
 
-smoothing_range(cde)=0;
+smoothing_range(cde)=1;
 
 
 * Full calculation
@@ -343,8 +334,8 @@ loop((r,cde)${SUM[ll,CountryData(r,ll,cde)]},
          SmoothedCountryData(r,l,cde)${smoothing_range(cde) = 0} = CountryData(r,l,cde);
 
          SmoothedCountryData(r,l,cde)${smoothing_range(cde) ge 0} =
-                  sum(ll${ord(ll) ge ord(l) - smoothing_range(cde) and ord(ll) le ord(l) + smoothing_range(cde)},
-                         CountryData(r,ll,cde)*(1 + (-1 + Dunkelflaute(r,ll,cde))$(switch_dunkelflaute = 1 and Dunkelflaute(r,ll,cde) gt 0)))
+                  sum(ll${ord(ll) ge ord(l) - smoothing_range(cde)
+                      and ord(ll) le ord(l) + smoothing_range(cde)}, CountryData(r,ll,cde)*(1 + (-1 + Dunkelflaute(r,ll,cde))$(switch_dunkelflaute = 1 and Dunkelflaute(r,ll,cde) gt 0)))
                   /
                   sum(ll${ord(ll) ge ord(l) - smoothing_range(cde)
                       and ord(ll) le ord(l) + smoothing_range(cde)}, 1)
@@ -419,8 +410,6 @@ ScaledCountryData(r,l,cde)${ (SmoothedCountryDataMax(r,cde) - SmoothedCountryDat
 
 YearSplit(l,y) = 1/card(l);
 
-DaySplit(y,l) = 1/24/8760;
-
 SpecifiedDemandProfile(r,f,l,y)$(SpecifiedAnnualDemand(r,f,y)) = ScaledCountryData(r,l,'load')/card(l);
 SpecifiedDemandProfile(r,'Mobility_Passenger',l,y) = ScaledCountryData(r,l,'mobility_psng')/sum(ll,ScaledCountryData(r,ll,'mobility_psng'));
 SpecifiedDemandProfile(r,'Mobility_Freight',l,y) = ScaledCountryData(r,l,'mobility_psng')/sum(ll,ScaledCountryData(r,ll,'mobility_psng'));
@@ -430,8 +419,8 @@ SpecifiedDemandProfile(r,'Heat_Medium_Industrial',l,y) = ScaledCountryData(r,l,'
 SpecifiedDemandProfile(r,'Heat_High_Industrial',l,y) = ScaledCountryData(r,l,'heat_high')/sum(ll,ScaledCountryData(r,ll,'heat_high'));
 
 CapacityFactor(r,t,l,y) = 1;
-CapacityFactor(r,Solar,l,y) = 0;
-CapacityFactor(r,Wind,l,y) = 0;
+CapacityFactor(r,t,l,y)$(TagTechnologyToSubsets(t,'Solar')) = 0;
+CapacityFactor(r,t,l,y)$(TagTechnologyToSubsets(t,'Wind')) = 0;
 
 TimeDepEfficiency(r,'HLR_Heatpump_Aerial',l,y) = ScaledCountryData(r,l,'heat_pump_air');
 TimeDepEfficiency(r,'HLR_Heatpump_Ground',l,y) = ScaledCountryData(r,l,'heat_pump_ground');
@@ -476,17 +465,3 @@ CapacityFactor(r,'Res_Wind_Offshore_Deep',l,y) = CountryData(r,l,'wind_offshore_
 CapacityFactor(r,'Res_pv_utility_tracking',l,y) = CountryData(r,l,'pv_tracking');
 CapacityFactor(r,'Res_Hydro_Small',l,y) = CountryData(r,l,'hydro_ror');
 );
-
-parameter Conversionls(TIMESLICE_FULL,ls);
-parameter Conversionld(TIMESLICE_FULL,ld);
-parameter Conversionlh(TIMESLICE_FULL,lh);
-
-
-Conversionls(l,'1')$(ord(l) ge 0             and ord(l) le (card(l)/4)) = 1;
-Conversionls(l,'2')$(ord(l) > (card(l)/4)    and ord(l) le (card(l)/4*2)) = 1;
-Conversionls(l,'3')$(ord(l) > (card(l)/4*2)  and ord(l) le (card(l)/4*3)) = 1;
-Conversionls(l,'4')$(ord(l) > (card(l)/4*3)  and ord(l) le  card(l)) = 1;
-
-Conversionld(l,ld) = 1;
-
-Conversionlh(l,lh)$(mod(ord(l)+%elmod_starthour%,24) = ord(lh)) = 1;

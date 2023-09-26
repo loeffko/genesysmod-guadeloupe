@@ -1,15 +1,6 @@
-* ###################### genesysmod.gms #######################
-*
 * GENeSYS-MOD v3.1 [Global Energy System Model]  ~ March 2022
 *
-* Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
-*
-* Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin L�ffler, Thorsten Burandt, Karlo Hainsch
-*
 * #############################################################
-*
-* Copyright 2020 Technische Universit�t Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -40,7 +31,7 @@ $if not set switch_ramping               $setglobal switch_ramping 0
 $if not set switch_short_term_storage    $setglobal switch_short_term_storage 1
 $if not set switch_all_regions           $setglobal switch_all_regions 1
 $if not set switch_infeasibility_tech    $setglobal switch_infeasibility_tech 1
-$if not set switch_base_year_bounds      $setglobal switch_base_year_bounds 1
+$if not set switch_base_year_bounds      $setglobal switch_base_year_bounds 0
 $if not set switch_only_load_gdx         $setglobal switch_only_load_gdx 0
 $if not set switch_write_output          $setglobal switch_write_output gdx
 $if not set switch_aggregate_region      $setglobal switch_aggregate_region 0
@@ -51,40 +42,38 @@ $if not set switch_test_data_load        $setglobal switch_test_data_load 0
 $if not set switch_only_write_results    $setglobal switch_only_write_results 0
 
 $if not set set_symmetric_transmission   $setglobal set_symmetric_transmission 0.85
-$if not set set_storagelevelstart_up     $setglobal set_storagelevelstart_up 1
+$if not set switch_hydrogen_blending_share      $setglobal switch_hydrogen_blending_share 1
+$if not set set_storagelevelstart_up     $setglobal set_storagelevelstart_up 0.75
 $if not set set_storagelevelstart_low    $setglobal set_storagelevelstart_low 0.5
 
 $if not set switch_peaking_capacity      $setglobal switch_peaking_capacity 0
-$if not set switch_peaking_with_trade    $setglobal switch_peaking_with_trade 1
+$if not set switch_peaking_with_trade    $setglobal switch_peaking_with_trade 0
 $if not set switch_peaking_with_storages $setglobal switch_peaking_with_storages 1
-$if not set switch_peaking_minrun        $setglobal switch_peaking_minrun 1
+$if not set switch_peaking_minrun        $setglobal switch_peaking_minrun 0
 $if not set set_peaking_slack            $setglobal set_peaking_slack 1.0
 *consider vRES only partially (1.0 consider vRES fully, 0.0 ignore vRES in peaking equation)
 $if not set set_peaking_res_cf           $setglobal set_peaking_res_cf 0.5
-$if not set set_peaking_min_thermal      $setglobal set_peaking_min_thermal 0
+$if not set set_peaking_min_thermal      $setglobal set_peaking_min_thermal 0.5
 $if not set set_peaking_startyear        $setglobal set_peaking_startyear 2025
-$if not set set_peaking_minrun_share     $setglobal set_peaking_minrun_share 0.15
+$if not set set_peaking_minrun_share     $setglobal set_peaking_minrun_share 0
 
 
-$if not set solver                       $setglobal solver gurobi
+$if not set solver                       $setglobal solver gamschk
 $if not set model_region                 $setglobal model_region guadeloupe
 $if not set data_base_region             $setglobal data_base_region GrandeTerreNorth
-$if not set global_data_file             $setglobal global_data_file Global_Data_v13_oE_kl_26_04_2022
-$if not set data_file                    $setglobal data_file Data_Guadeloupe_Case1_v00_mo_28_07_2023
+$if not set data_file                    $setglobal data_file Data_Guadeloupe_Combined_v01_kl_24_09_2023
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
 $if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Guadeloupe_v03_kl_30_06_2023
-$if not set threads                      $setglobal threads 4
+$if not set threads                      $setglobal threads 8
 $if not set timeseries                   $setglobal timeseries elmod
-$if not set elmod_nthhour                $setglobal elmod_nthhour 488
+$if not set elmod_nthhour                $setglobal elmod_nthhour 73
 $if not set elmod_starthour              $setglobal elmod_starthour 18
 $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
-
+$if not set hydrogen_growthcost_multiplier $setglobal hydrogen_growthcost_multiplier 1
 
 
 $if not set emissionPathway              $setglobal emissionPathway Free
 $if not set emissionScenario             $setglobal emissionScenario globalLimit
-
-$if not set socialdiscountrate           $setglobal socialdiscountrate 0.05
 
 $ifthen %switch_unixPath% == 1
 $if not set inputdir                     $setglobal inputdir Inputdata/
@@ -99,7 +88,6 @@ $if not set resultdir                    $setglobal resultdir Results\
 $endif
 
 option dnlp = conopt;
-
 
 *
 * ####### Declarations #############
@@ -152,6 +140,9 @@ $ifthen %switch_only_write_results% == 0
 $offlisting
 $include genesysmod_equ.gms
 
+
+
+
 *
 * ####### CPLEX Options #############
 *
@@ -173,6 +164,7 @@ lpmethod 4
 quality yes
 barobjrng 1e+075
 tilim 1000000
+
 $offecho
 
 $onecho > gurobi.opt
