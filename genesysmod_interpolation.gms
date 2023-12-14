@@ -5,11 +5,11 @@
 * Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
 *
 * Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
+* by Konstantin Lï¿½ffler, Thorsten Burandt, Karlo Hainsch
 *
 * #############################################################
 *
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
+* Copyright 2020 Technische Universitï¿½t Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -65,7 +65,9 @@ CapitalCostStorage(r,s,y)$(CapitalCostStorage(r,s,y) = 0) = CapitalCostStorage(r
 
 TotalAnnualMaxCapacity(r,t,y)$(TotalAnnualMaxCapacity(r,t,y) = 0) = TotalAnnualMaxCapacity(r,t,y-1);
 
-ResidualCapacity(r,t,y)$(ResidualCapacity(r,t,y) = 0 and ResidualCapacity(r,t,y+1)>0) = (ResidualCapacity(r,t,y-1)+ResidualCapacity(r,t,y+1))/2;
+
+* The following line has been commented for Guadeloupe
+*ResidualCapacity(r,t,y)$(ResidualCapacity(r,t,y) = 0 and ResidualCapacity(r,t,y+1)>0) = (ResidualCapacity(r,t,y-1)+ResidualCapacity(r,t,y+1))/2;
 TotalTechnologyAnnualActivityUpperLimit(r,t,y)$(TotalTechnologyAnnualActivityUpperLimit(r,t,y) = 0 and TotalTechnologyAnnualActivityUpperLimit(r,t,y+1)>0) = (TotalTechnologyAnnualActivityUpperLimit(r,t,y-1)+TotalTechnologyAnnualActivityUpperLimit(r,t,y+1))/2;
 
 GrowthRateTradeCapacity(y,'Power',r,rr)$(GrowthRateTradeCapacity(y,'Power',r,rr) = 0) = GrowthRateTradeCapacity(y-1,'Power',r,rr);

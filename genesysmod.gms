@@ -1,11 +1,13 @@
 * ###################### genesysmod.gms #######################
 *
-* GENeSYS-MOD v3.1 [Global Energy System Model]  ~ March 2022
+* GENeSYS-MOD ??? [Global Energy System Model]  ~ December 2023
 *
 * Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
 *
 * Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
 * by Konstantin L�ffler, Thorsten Burandt, Karlo Hainsch
+*
+* Adjusted to Guadeloupe by Mostafa Barani and Konstantin L�ffler
 *
 * #############################################################
 *
@@ -32,7 +34,6 @@ scalar starttime;
 starttime = jnow;
 
 $if not set year                         $setglobal year 2018
-
 $if not set switch_unixPath              $setglobal switch_unixPath 0
 $if not set switch_investLimit           $setglobal switch_investLimit 0
 $if not set switch_ccs                   $setglobal switch_ccs 1
@@ -49,12 +50,10 @@ $if not set switch_weighted_emissions    $setglobal switch_weighted_emissions 1
 $if not set switch_employment_calculation $setglobal switch_employment_calculation 0
 $if not set switch_test_data_load        $setglobal switch_test_data_load 0
 $if not set switch_only_write_results    $setglobal switch_only_write_results 0
-
 $if not set set_symmetric_transmission   $setglobal set_symmetric_transmission 0.85
 $if not set set_storagelevelstart_up     $setglobal set_storagelevelstart_up 1
 $if not set set_storagelevelstart_low    $setglobal set_storagelevelstart_low 0.5
-
-$if not set switch_peaking_capacity      $setglobal switch_peaking_capacity 0
+$if not set switch_peaking_capacity      $setglobal switch_peaking_capacity 1
 $if not set switch_peaking_with_trade    $setglobal switch_peaking_with_trade 1
 $if not set switch_peaking_with_storages $setglobal switch_peaking_with_storages 1
 $if not set switch_peaking_minrun        $setglobal switch_peaking_minrun 1
@@ -65,26 +64,30 @@ $if not set set_peaking_min_thermal      $setglobal set_peaking_min_thermal 0
 $if not set set_peaking_startyear        $setglobal set_peaking_startyear 2025
 $if not set set_peaking_minrun_share     $setglobal set_peaking_minrun_share 0.15
 
-
-$if not set solver                       $setglobal solver gurobi
+$if not set solver                       $setglobal solver cplex
 $if not set model_region                 $setglobal model_region guadeloupe
 $if not set data_base_region             $setglobal data_base_region GrandeTerreNorth
 $if not set global_data_file             $setglobal global_data_file Global_Data_v13_oE_kl_26_04_2022
-$if not set data_file                    $setglobal data_file Data_Guadeloupe_Case1_v00_mo_28_07_2023
+* Other input files:
+* Data_Guadeloupe_v03_mb_FreeGlobalLimit_Case1_14_12_2023
+* Data_Guadeloupe_v03_mb_Independence2050_Case1_14_12_2023
+* Data_Guadeloupe_v03_mb_Independence2040_Case1_14_12_2023
+$if not set data_file                    $setglobal data_file Data_Guadeloupe_v03_mb_FreeGlobalLimit_Case1_14_12_2023
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
 $if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Guadeloupe_v03_kl_30_06_2023
+
 $if not set threads                      $setglobal threads 4
 $if not set timeseries                   $setglobal timeseries elmod
-$if not set elmod_nthhour                $setglobal elmod_nthhour 488
-$if not set elmod_starthour              $setglobal elmod_starthour 18
+$if not set elmod_nthhour                $setglobal elmod_nthhour 71
+$if not set elmod_starthour              $setglobal elmod_starthour 1
 $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
-
-
-
-$if not set emissionPathway              $setglobal emissionPathway Free
+* Other case studies: Free, Indpendence2040, Independence2050
+$if not set emissionPathway              $setglobal emissionPathway Free 
 $if not set emissionScenario             $setglobal emissionScenario globalLimit
 
+
 $if not set socialdiscountrate           $setglobal socialdiscountrate 0.05
+
 
 $ifthen %switch_unixPath% == 1
 $if not set inputdir                     $setglobal inputdir Inputdata/
@@ -164,33 +167,39 @@ sysout = off
 profile=2
 ;
 
+*$ifthen %solver% == cplex
 $onecho > cplex.opt
 threads %threads%
 parallelmode -1
-lpmethod 4
+lpmethod 2
 *names no
 *solutiontype 2
 quality yes
-barobjrng 1e+075
+*barobjrng 1e+075
 tilim 1000000
+optca=0
+optcr=0
 $offecho
+*$endif
 
+*$ifthen %solver% == gurobi
 $onecho > gurobi.opt
 threads %threads%
 method 2
 names no
 barhomogeneous 1
 timelimit 1000000
-$offecho
+*$offecho
 
 
-$onecho > osigurobi.opt
+*$onecho > osigurobi.opt
 threads %threads%
 method 2
 names no
 barhomogeneous 1
 timelimit 1000000
 $offecho
+*$endif
 
 display "switch_investLimit   = %switch_investLimit%";
 display "switch_ccs           = %switch_ccs%";

@@ -45,7 +45,7 @@ output_energy_balance(r,'Demand','Demand','1',f,l,'Use','billion km','%emissionP
 output_energy_balance(r,'Trade','Trade','1',f,l,'Import','PJ','%emissionPathway%_%emissionScenario%',y) = sum(rr, Import.l(y,l,f,r,rr)) ;
 output_energy_balance(r,'Trade','Trade','1',f,l,'Export','PJ','%emissionPathway%_%emissionScenario%',y) = - sum(rr, Export.l(y,l,f,r,rr)) ;
 * Added for Guadeloupe
-*output_energy_balance(r,'Trade','Trade','1',f,l,'Loss','PJ','%emissionPathway%_%emissionScenario%',y) = - sum(rr, Export.l(y,l,f,r,rr)*TradeLossBetweenRegions(y,f,r,rr)) ;
+output_energy_balance(r,'Trade','Trade','1',f,l,'Loss','PJ','%emissionPathway%_%emissionScenario%',y) = - sum(rr, Export.l(y,l,f,r,rr)*TradeLossBetweenRegions(y,f,r,rr)) ;
 
 parameter output_energy_balance_annual(*,*,*,*,*,*,*,*);
 output_energy_balance_annual(r,se,t,f,'Production','PJ','%emissionPathway%_%emissionScenario%',y)$(TagTechnologyToSector(t,se)  and not TagTechnologyToSector(t,'Transportation')) = sum((l,m),output_energy_balance(r,se,t,m,f,l,'Production','PJ','%emissionPathway%_%emissionScenario%',y));

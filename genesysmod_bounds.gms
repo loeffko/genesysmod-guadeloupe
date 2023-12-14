@@ -45,11 +45,18 @@ TotalTechnologyModelPeriodActivityLowerLimit(REGION,TECHNOLOGY) = 0;
 TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y)$(TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y) = 0) = 999999;
 
 * Added for Guadeloupe
+* ------------------------------------------------------------------------------
 TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Grass',y)=0;
 TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Wood',y)=0;
 TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Roundwood',y)=0;
 TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Paper_Cardboard',y)=0;
 TotalTechnologyAnnualActivityUpperLimit(REGION,'RES_Biogas',y)=0;
+TotalTechnologyAnnualActivityUpperLimit(REGION,'D_PHS_Residual','2018')=0;
+
+*TotalTechnologyAnnualActivityUpperLimit(REGION,'D_PHS_Residual','2021')=0;
+
+
+* ------------------------------------------------------------------------------
 
 TimeDepEfficiency(r,t,l,y)$(not TimeDepEfficiency(r,t,l,y)) = 1;
 
@@ -162,6 +169,45 @@ NewCapacity.up('%year%','HLR_Solar_Thermal',r) = +INF;
 NewCapacity.up('%year%','HLI_Solar_Thermal',r) = +INF;
 NewCapacity.up('%year%','D_Heat_HLR',r) = +INF;
 *NewCapacity.up('%year%',t,r)$(TagTechnologyToSector(t,'CHP')) = +INF;
+
+*Added for Guadeloupe:
+*------------------------------------------------------------
+
+
+* 2018 and 2021 are historical years. No planning is required.
+
+NewCapacity.fx('2018',PowerSupply,REGION)=0;
+NewCapacity.fx('2021',PowerSupply,REGION)=0;
+
+$ontext
+*The limit on D_Heat_HLI sometimes causes infeasibility
+NewCapacity.fx('2018','D_Heat_HLR',REGION)=0;
+NewCapacity.fx('2021','D_Heat_HLR',REGION)=0;
+
+NewCapacity.fx('2018','D_Heat_HLI',REGION)=0;
+NewCapacity.fx('2021','D_Heat_HLI',REGION)=0;
+
+*The limit on StorageDummies sometimes causes infeasibility
+NewCapacity.fx('2018',StorageDummies,REGION)=0;
+NewCapacity.fx('2021',StorageDummies,REGION)=0;
+$offText
+
+NewCapacity.up('2018',Heat,r) = 0;
+NewCapacity.up('2021',Heat,r) = 0;
+
+NewCapacity.up('2018','HLR_Direct_Electric',r) = +INF;
+NewCapacity.up('2021','HLR_Direct_Electric',r) = +INF;
+NewCapacity.up('2018','HLR_Solar_Thermal',r) = +INF;
+NewCapacity.up('2021','HLR_Solar_Thermal',r) = +INF;
+
+NewCapacity.up('2018','HLI_Direct_Electric',r) = +INF;
+NewCapacity.up('2021','HLI_Direct_Electric',r) = +INF;
+NewCapacity.up('2018','HLI_Gas_Boiler',r) = +INF;
+NewCapacity.up('2021','HLI_Gas_Boiler',r) = +INF;
+
+$ontext
+$offtext
+* ------------------------------------------------------------
 
 
 *** ReserveMargin initialization

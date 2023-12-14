@@ -107,7 +107,14 @@ $ifthen %EmissionPathway% == Independence2040
 ProductionByTechnologyAnnual.fx(y,t,'Gas_Natural',r)$(YearVal(y)>=2040) = 0;
 UseByTechnologyAnnual.up(y,t,FossilFuels,r)$(not sum(CCS,diag(t,CCS)) and YearVal(y)>=2040) = 0;
 *AnnualEmissionLimit should be defined
+scalar emission2018 /2.1/;
 
+AnnualEmissionLimit('CO2','2025')=emission2018*0.57;
+AnnualEmissionLimit('CO2','2030')=emission2018*0.3;
+AnnualEmissionLimit('CO2','2035')=emission2018*0.08;
+AnnualEmissionLimit('CO2','2040')=emission2018*0;
+AnnualEmissionLimit('CO2','2045')=emission2018*0;
+AnnualEmissionLimit('CO2','2050')=emission2018*0;
 
 $endif
 
@@ -115,5 +122,14 @@ $ifthen %EmissionPathway% == Independence2050
 ProductionByTechnologyAnnual.fx(y,t,'Gas_Natural',r)$(YearVal(y)>=2050) = 0;
 UseByTechnologyAnnual.up(y,t,FossilFuels,r)$(not sum(CCS,diag(t,CCS)) and YearVal(y)>=2050) = 0;
 *AnnualEmissionLimit should be defined
+scalar emission2018 /6/;
+
+AnnualEmissionLimit('CO2','2025')=emission2018*0.69;
+AnnualEmissionLimit('CO2','2030')=emission2018*0.46;
+AnnualEmissionLimit('CO2','2035')=emission2018*0.30;
+AnnualEmissionLimit('CO2','2040')=emission2018*0.14;
+AnnualEmissionLimit('CO2','2045')=emission2018*0.03;
+AnnualEmissionLimit('CO2','2050')=emission2018*0;
+
 $endif
 

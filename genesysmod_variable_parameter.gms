@@ -17,10 +17,10 @@ parameter RateOfProductionByTechnologyByMode(y_full,TIMESLICE_FULL,TECHNOLOGY,MO
 RateOfProductionByTechnologyByMode(y,l,t,m,f,r) = RateOfActivity.l(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y);
 
 parameter RateOfUseByTechnologyByMode(y_full,TIMESLICE_FULL,TECHNOLOGY,MODE_OF_OPERATION,FUEL,REGION_FULL);
-RateOfUseByTechnologyByMode(y,l,t,m,f,r) = RateOfActivity.l(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y);
-
-* Changed for Guadeloupe
-*RateOfUseByTechnologyByMode(y,l,t,m,f,r) = RateOfActivity.l(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y)*TimeDepEfficiency(r,t,l,y);
+* the next line has been commented for Guadeloupe
+*RateOfUseByTechnologyByMode(y,l,t,m,f,r) = RateOfActivity.l(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y);
+* The above line has been changed to the following
+RateOfUseByTechnologyByMode(y,l,t,m,f,r) = RateOfActivity.l(y,l,t,m,r)*InputActivityRatio(r,t,f,m,y)*TimeDepEfficiency(r,t,l,y);
 
 parameter RateOfProductionByTechnology(y_full,TIMESLICE_FULL,TECHNOLOGY,FUEL,REGION_FULL);
 RateOfProductionByTechnology(y,l,t,f,r) = sum(m$(OutputActivityRatio(r,t,f,m,y) <> 0), RateOfActivity.l(y,l,t,m,r)*OutputActivityRatio(r,t,f,m,y));

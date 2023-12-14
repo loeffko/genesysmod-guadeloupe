@@ -1,0 +1,16 @@
+Data Guadeloupe:
+=================
+
+Updates in Data_Guadeloupe_v01_mb_Case1_23_09_2023:
+
+- The annual electricity demand of 2021 was updated.
+- HLR_Direct_Electric has been added to residual capacities.
+--------------------------------------------------------------------------------
+
+Updates in v03_mb:
+
+- Specified annual demand
+- Modal Split
+- Residula capacities
+- Total annual min activitiy for heat
+--------------------------------------------------------------------------------
