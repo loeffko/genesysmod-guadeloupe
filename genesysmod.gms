@@ -67,7 +67,7 @@ $if not set set_peaking_minrun_share     $setglobal set_peaking_minrun_share 0.1
 $if not set solver                       $setglobal solver cplex
 $if not set model_region                 $setglobal model_region guadeloupe
 $if not set data_base_region             $setglobal data_base_region GrandeTerreNorth
-$if not set global_data_file             $setglobal global_data_file Global_Data_v13_oE_kl_26_04_2022
+$if not set global_data_file             $setglobal global_data_file Global_Data_v14_kl_15_12_2023
 * Other input files:
 * Data_Guadeloupe_v03_mb_FreeGlobalLimit_Case1_14_12_2023
 * Data_Guadeloupe_v03_mb_Independence2050_Case1_14_12_2023
@@ -78,8 +78,8 @@ $if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data
 
 $if not set threads                      $setglobal threads 4
 $if not set timeseries                   $setglobal timeseries elmod
-$if not set elmod_nthhour                $setglobal elmod_nthhour 71
-$if not set elmod_starthour              $setglobal elmod_starthour 1
+$if not set elmod_nthhour                $setglobal elmod_nthhour 73
+$if not set elmod_starthour              $setglobal elmod_starthour 10
 $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
 * Other case studies: Free, Indpendence2040, Independence2050
 $if not set emissionPathway              $setglobal emissionPathway Free 
@@ -189,10 +189,10 @@ method 2
 names no
 barhomogeneous 1
 timelimit 1000000
-*$offecho
+$offecho
 
 
-*$onecho > osigurobi.opt
+$onecho > osigurobi.opt
 threads %threads%
 method 2
 names no

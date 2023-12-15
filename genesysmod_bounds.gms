@@ -130,6 +130,8 @@ CapacityFactor(r,ImportTechnology,l,y) = 1 ;
 OperationalLife(r,ImportTechnology) = 1 ;
 TotalTechnologyModelPeriodActivityUpperLimit(r,ImportTechnology) = 999999;
 
+
+CapacityToActivityUnit(r,t)$(not CapacityToActivityUnit(r,t)) = 1;
 *
 * ####### Bounds for storage technologies #############
 *

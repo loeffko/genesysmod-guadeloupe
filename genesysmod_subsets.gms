@@ -316,6 +316,7 @@ RenewableTransport('PSNG_Rail_Electric') = yes;
 RenewableTransport('PSNG_Road_BEV') = yes;
 RenewableTransport('PSNG_Road_H2') = yes;
 RenewableTransport('PSNG_Road_PHEV') = yes;
+RenewableTransport('PSNG_Ship_EL') = yes;
 
 
 set Transport(t);
@@ -341,6 +342,7 @@ Transport('PSNG_Road_PHEV') = yes;
 Transport('PSNG_Ship_Bio') = yes;
 Transport('PSNG_Ship_Conv') = yes;
 Transport('PSNG_Ship_Bio') = yes;
+Transport('PSNG_Ship_EL') = yes;
 
 
 set Passenger(t);
@@ -353,7 +355,9 @@ Passenger('PSNG_Rail_Electric') = yes;
 Passenger('PSNG_Road_BEV') = yes;
 Passenger('PSNG_Road_H2') = yes;
 Passenger('PSNG_Road_ICE') = yes;
-Passenger('PSNG_Road_PHEV') = yes;
+Transport('PSNG_Ship_Conv') = yes;
+Transport('PSNG_Ship_Bio') = yes;
+Transport('PSNG_Ship_EL') = yes;
 
 set Freight(t);
 Freight(t) = no;
