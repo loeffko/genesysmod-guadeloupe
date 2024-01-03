@@ -35,13 +35,13 @@ starttime = jnow;
 
 $if not set year                         $setglobal year 2018
 $if not set switch_unixPath              $setglobal switch_unixPath 0
-$if not set switch_investLimit           $setglobal switch_investLimit 0
+$if not set switch_investLimit           $setglobal switch_investLimit 1
 $if not set switch_ccs                   $setglobal switch_ccs 1
 $if not set switch_ramping               $setglobal switch_ramping 0
 $if not set switch_short_term_storage    $setglobal switch_short_term_storage 1
 $if not set switch_all_regions           $setglobal switch_all_regions 1
 $if not set switch_infeasibility_tech    $setglobal switch_infeasibility_tech 1
-$if not set switch_base_year_bounds      $setglobal switch_base_year_bounds 1
+$if not set switch_base_year_bounds      $setglobal switch_base_year_bounds 0
 $if not set switch_only_load_gdx         $setglobal switch_only_load_gdx 0
 $if not set switch_write_output          $setglobal switch_write_output gdx
 $if not set switch_aggregate_region      $setglobal switch_aggregate_region 0
@@ -69,19 +69,22 @@ $if not set model_region                 $setglobal model_region guadeloupe
 $if not set data_base_region             $setglobal data_base_region GrandeTerreNorth
 $if not set global_data_file             $setglobal global_data_file Global_Data_v14_kl_15_12_2023
 * Other input files:
-* Data_Guadeloupe_v03_mb_FreeGlobalLimit_Case1_14_12_2023
-* Data_Guadeloupe_v03_mb_Independence2050_Case1_14_12_2023
-* Data_Guadeloupe_v03_mb_Independence2040_Case1_14_12_2023
-$if not set data_file                    $setglobal data_file Data_Guadeloupe_v03_mb_FreeGlobalLimit_Case1_14_12_2023
+* CaseI:   Data_Guadeloupe_v04_mb_FreeGlobalLimit_28_12_2023
+* CaseII:  Data_Guadeloupe_v04_mb_Independence2050_28_12_2023
+* CaseIII: Data_Guadeloupe_v04_mb_Independence2040_28_12_2023
+$if not set data_file                    $setglobal data_file Data_Guadeloupe_v04_mb_FreeGlobalLimit_28_12_2023
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
 $if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Guadeloupe_v03_kl_30_06_2023
 
-$if not set threads                      $setglobal threads 4
+$if not set threads                      $setglobal threads 10
 $if not set timeseries                   $setglobal timeseries elmod
 $if not set elmod_nthhour                $setglobal elmod_nthhour 73
 $if not set elmod_starthour              $setglobal elmod_starthour 10
 $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
-* Other case studies: Free, Indpendence2040, Independence2050
+* Other emission pathways (case studies):
+* CaseI:   Free
+* CaseII:  Independence2050
+* CaseIII: Independence2040
 $if not set emissionPathway              $setglobal emissionPathway Free 
 $if not set emissionScenario             $setglobal emissionScenario globalLimit
 
@@ -167,22 +170,22 @@ sysout = off
 profile=2
 ;
 
-*$ifthen %solver% == cplex
+
 $onecho > cplex.opt
 threads %threads%
 parallelmode -1
-lpmethod 2
+lpmethod 4
 *names no
 *solutiontype 2
 quality yes
 *barobjrng 1e+075
 tilim 1000000
-optca=0
-optcr=0
+*datacheck 2
+* The following line has been added for Guadeloupe to prevent unscaled infeasibility
+eprhs  1.0e-9
 $offecho
-*$endif
 
-*$ifthen %solver% == gurobi
+
 $onecho > gurobi.opt
 threads %threads%
 method 2
@@ -199,7 +202,7 @@ names no
 barhomogeneous 1
 timelimit 1000000
 $offecho
-*$endif
+
 
 display "switch_investLimit   = %switch_investLimit%";
 display "switch_ccs           = %switch_ccs%";
@@ -253,7 +256,11 @@ heapSizeAfterSolve = heapSize;
 scalar elapsed;
 elapsed = (jnow - starttime)*24*3600;
 
-display elapsed,  heapSizeBeforSolve, heapSizeAfterSolve;
+parameter z_ProductionByTechnologyByModeAnnual;
+
+z_ProductionByTechnologyByModeAnnual(r,t,f,y) = sum((l,m),RateOfProductionByTechnologyByMode(y,l,t,m,f,r)*YearSplit(l,y));
+
+display elapsed, heapSizeBeforSolve, heapSizeAfterSolve, AnnualEmissionLimit;
 $endif
 
 *

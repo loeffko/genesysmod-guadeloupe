@@ -204,11 +204,47 @@ output_energydemandstatistics('Import Share of Primary Energy [%]','Total',r,f,y
 output_energydemandstatistics('Import Share of Primary Energy [%]','Total','Total',f,y)$(sum((ImportTechnology,m,r),OutputActivityRatio(r,ImportTechnology,f,m,y))) = (sum((ImportTechnology,r),ProductionByTechnologyAnnual.l(y,ImportTechnology,f,r))/3.6)/sum(ff,output_energydemandstatistics('Primary Energy [TWh]','Total','Total',ff,y));
 output_energydemandstatistics('Import Share of Primary Energy [%]','Total','EU27',f,y)$(sum((ImportTechnology,m,EU27),OutputActivityRatio(EU27,ImportTechnology,f,m,y))) = (sum((ImportTechnology,EU27),ProductionByTechnologyAnnual.l(y,ImportTechnology,f,EU27))/3.6)/sum(ff,output_energydemandstatistics('Primary Energy [TWh]','Total','EU27',ff,y));
 
+scalar todaydate    Gregorian date and time of start of GAMS job
+       now          Gregorian current date + time
+       yearii         Year of job,
+       month        Month of job,
+       day          Day of job,
+       hour         Hour of job,
+       minute       Minute of job,
+       second       Second of job,
+       dow          Day of week of job
+       leap         Leap year status oof job
+       date1         Reverse data of this year, month and date;
+todaydate  = jstart;
+now    = jnow;
+yearii   = gyear(todaydate);
+month  = gmonth (todaydate);
+day    = gday   (todaydate);
+hour   = ghour(todaydate);
+minute = gminute(todaydate);
+second = gsecond(todaydate);
+dow    = gdow (todaydate);
+leap   = gleap(todaydate);
+display todaydate,now, yearii, month, day, hour, minute, second, dow, leap;
+
+$ontext
+date1  = jdate(year,month,day);
+time  = jtime(hour,minute,second);
+display date11111,time;
+$offtext
+
+scalar plus200days;
+todaydate  = jstart+200;
+yearii   = gyear(todaydate);
+month  = gmonth (todaydate);
+day    = gday   (todaydate);
+*display todaydate,yearii, month, day;
+
 
 $ifthen set Info
 execute_unload "%gdxdir%Output_%model_region%_%emissionPathway%_%emissionScenario%_%info%.gdx"
 $else
-execute_unload "%gdxdir%Output_%model_region%_%emissionPathway%_%emissionScenario%.gdx"
+execute_unload "%gdxdir%Output_%model_region%_%emissionPathway%_%emissionScenario%_%elmod_nthhour%.gdx"
 $endif
 output_energy_balance
 output_energy_balance_annual
@@ -308,7 +344,9 @@ $offecho
 
 $ifthen set info
 execute 'gdxxrw.exe i=%gdxdir%Output_%model_region%_%emissionPathway%_%emissionScenario%_%info%.gdx UpdLinks=3 o=%resultdir%Pivot_Output_%model_region%_%emissionPathway%_%emissionScenario%_%info%.xlsx @%tempdir%temp_exceloutput.tmp';
+Display yearii
 $else
 execute 'gdxxrw.exe i=%gdxdir%Output_%model_region%_%emissionPathway%_%emissionScenario%.gdx UpdLinks=3 o=%resultdir%Pivot_Output_%model_region%_%emissionPathway%_%emissionScenario%.xlsx @%tempdir%temp_exceloutput.tmp';
+Display month
 $endif
 $endif

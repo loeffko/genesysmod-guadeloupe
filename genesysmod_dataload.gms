@@ -131,6 +131,11 @@ se=0
 
         par=TotalTechnologyAnnualActivityUpperLimit   Rng=Par_TotalAnnualMaxActivity!A5                   rdim=2        cdim=1
         par=TotalTechnologyAnnualActivityLowerLimit   Rng=Par_TotalAnnualMinActivity!A5                   rdim=2        cdim=1
+* Added for Guadeloupe:
+* -------------------------------------------------------------------------------------
+        par=OverallBaseYearMinActivity   Rng=Par_OverallBaseYearMinActivity!A5            rdim=1        cdim=1
+        par=OverallBaseYearMaxActivity   Rng=Par_OverallBaseYearMaxActivity!A5            rdim=1        cdim=1
+* -------------------------------------------------------------------------------------
 
         par=ReserveMarginTagTechnology  Rng=Par_ReserveMarginTagTechnology!A5            rdim=2        cdim=1
 
@@ -164,7 +169,11 @@ $loadm EmissionsPenalty ReserveMargin AnnualExogenousEmission  AnnualEmissionLim
 $loadm ReserveMarginTagFuel Readin_TradeRoute2015 Readin_PowerTradeCapacity GrowthRateTradeCapacity TradeCapacityGrowthCosts Readin_TradeCosts
 $loadm InputActivityRatio OutputActivityRatio FixedCost CapitalCost VariableCost ResidualCapacity   EmissionsPenaltyTagTechnology
 $loadm AvailabilityFactor CapacityFactor EmissionActivityRatio OperationalLife TotalAnnualMaxCapacity TotalAnnualMinCapacity EmissionContentPerFuel
-$loadm TotalTechnologyAnnualActivityLowerLimit TotalTechnologyAnnualActivityUpperLimit
+$loadm TotalTechnologyAnnualActivityLowerLimit  TotalTechnologyAnnualActivityUpperLimit
+* Second parameter has been added for Guadeloupe
+* -------------------------------------------------------------------------------------
+$loadm OverallBaseYearMinActivity OverallBaseYearMaxActivity
+* -------------------------------------------------------------------------------------
 $loadm Readin_TotalTechnologyModelPeriodActivityUpperLimit
 $loadm TechnologyToStorage TechnologyFromStorage StorageLevelStart StorageMaxChargeRate StorageMaxDischargeRate MinStorageCharge
 $loadm CapitalCostStorage OperationalLifeStorage

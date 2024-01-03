@@ -55,6 +55,16 @@ TotalTechnologyAnnualActivityUpperLimit(REGION,'D_PHS_Residual','2018')=0;
 
 *TotalTechnologyAnnualActivityUpperLimit(REGION,'D_PHS_Residual','2021')=0;
 
+TotalTechnologyAnnualActivityUpperLimit('BasseTerreNorth','RES_Residues',y)=0;
+TotalTechnologyAnnualActivityUpperLimit('GrandSud','RES_Residues',y)=0;
+TotalTechnologyAnnualActivityUpperLimit('GrandeTerreNorth','RES_Residues',y)=0;
+TotalTechnologyAnnualActivityUpperLimit('LaDesirade','RES_Residues',y)=0;
+TotalTechnologyAnnualActivityUpperLimit('MarieGalante','RES_Residues',y)=0;
+TotalTechnologyAnnualActivityUpperLimit('MinorIslands','RES_Residues',y)=0;
+TotalTechnologyAnnualActivityUpperLimit('RivieraDuLevant','RES_Residues',y)=0;
+
+
+OverallBaseYearMaxActivity(TECHNOLOGY,YEAR_FULL)$(OverallBaseYearMaxActivity(TECHNOLOGY,YEAR_FULL) = 0) = 999999;
 
 * ------------------------------------------------------------------------------
 
@@ -178,9 +188,9 @@ NewCapacity.up('%year%','D_Heat_HLR',r) = +INF;
 
 * 2018 and 2021 are historical years. No planning is required.
 
+
 NewCapacity.fx('2018',PowerSupply,REGION)=0;
 NewCapacity.fx('2021',PowerSupply,REGION)=0;
-
 $ontext
 *The limit on D_Heat_HLI sometimes causes infeasibility
 NewCapacity.fx('2018','D_Heat_HLR',REGION)=0;
@@ -197,6 +207,7 @@ $offText
 NewCapacity.up('2018',Heat,r) = 0;
 NewCapacity.up('2021',Heat,r) = 0;
 
+
 NewCapacity.up('2018','HLR_Direct_Electric',r) = +INF;
 NewCapacity.up('2021','HLR_Direct_Electric',r) = +INF;
 NewCapacity.up('2018','HLR_Solar_Thermal',r) = +INF;
@@ -204,11 +215,10 @@ NewCapacity.up('2021','HLR_Solar_Thermal',r) = +INF;
 
 NewCapacity.up('2018','HLI_Direct_Electric',r) = +INF;
 NewCapacity.up('2021','HLI_Direct_Electric',r) = +INF;
-NewCapacity.up('2018','HLI_Gas_Boiler',r) = +INF;
-NewCapacity.up('2021','HLI_Gas_Boiler',r) = +INF;
+NewCapacity.up('2018','HLI_Biomass',r) = +INF;
+NewCapacity.up('2021','HLI_Biomass',r) = +INF;
 
-$ontext
-$offtext
+
 * ------------------------------------------------------------
 
 

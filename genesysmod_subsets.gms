@@ -5,11 +5,11 @@
 * Based on OSEMOSYS 2011.07.07 conversion to GAMS by Ken Noble, Noble-Soft Systems - August 2012
 *
 * Updated to newest OSeMOSYS-Version (2016.08) and further improved with additional equations 2016 - 2022
-* by Konstantin Löffler, Thorsten Burandt, Karlo Hainsch
+* by Konstantin Lï¿½ffler, Thorsten Burandt, Karlo Hainsch
 *
 * #############################################################
 *
-* Copyright 2020 Technische Universität Berlin and DIW Berlin
+* Copyright 2020 Technische Universitï¿½t Berlin and DIW Berlin
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -653,7 +653,8 @@ PhaseInSet('Res_PV_utility_avg') = yes;
 PhaseInSet('Res_PV_utility_inf') = yes;
 PhaseInSet('RES_PV_Utility_Tracking') = yes;
 PhaseInSet('Res_CSP') = yes;
-PhaseInSet('Res_Geothermal') = yes;
+* The following line of code has been commented for Guadeloupe to prevent infeasibility when InvestLim switch is on.
+*PhaseInSet('Res_Geothermal') = yes;
 PhaseInSet('Res_Hydro_Small') = yes;
 PhaseInSet('Res_Hydro_Large') = yes;
 PhaseInSet('Res_Ocean') = yes;

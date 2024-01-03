@@ -312,27 +312,28 @@ CC2_DiscountingCapitalInvestmenta(y,t,r).. CapitalInvestment(y,t,r)/((1+Technolo
 * ############### Investment & Capacity Limits #############
 *
 
+* The second period (year 2021) has been removed from all the investment limit equations for Guadeloupe study. 
+
 $ifthen %switch_investLimit% == 1
 
 equation CC3_InvestmentLimit(YEAR_FULL);
-CC3_InvestmentLimit(y)$(YearVal(y) > %year%).. sum((t,r),CapitalInvestment(y,t,r)) =l= 1/(smax(yy,Yearval(yy))-smin(yy,YearVal(yy)))*YearlyDifferenceMultiplier(y-1)*InvestmentLimit*sum(yy,sum((t,r),CapitalInvestment(yy,t,r)));
-
+CC3_InvestmentLimit(y)$(YearVal(y) > 2021).. sum((t,r),CapitalInvestment(y,t,r)) =l= 1/(smax(yy,Yearval(yy))-smin(yy,YearVal(yy)))*YearlyDifferenceMultiplier(y-1)*InvestmentLimit*sum(yy,sum((t,r),CapitalInvestment(yy,t,r))); 
 
 equation CC4_CapacityLimit(YEAR_FULL,REGION_FULL,TECHNOLOGY);
-CC4_CapacityLimit(y,r,Renewables)$(ord(y)>1).. NewCapacity(y,Renewables,r) =l= YearlyDifferenceMultiplier(y-1)*NewRESCapacity*TotalAnnualMaxCapacity(r,Renewables,y);
+CC4_CapacityLimit(y,r,Renewables)$(Yearval(y) > 2021).. NewCapacity(y,Renewables,r) =l= YearlyDifferenceMultiplier(y-1)*NewRESCapacity*TotalAnnualMaxCapacity(r,Renewables,y);
 
 equation CC5c_PhaseInLowerLimit(YEAR_FULL,REGION_FULL,TECHNOLOGY,FUEL);
-CC5c_PhaseInLowerLimit(y,r,PhaseInSet,f)$(Yearval(y) > %year%).. ProductionByTechnologyAnnual(y,PhaseInSet,f,r) =g= ProductionByTechnologyAnnual(y-1,PhaseInSet,f,r)*PhaseIn(y)*((SpecifiedAnnualDemand(r,f,y)/SpecifiedAnnualDemand(r,f,y-1))$(SpecifiedAnnualDemand(r,f,y))+1$(not SpecifiedAnnualDemand(r,f,y)));
+CC5c_PhaseInLowerLimit(y,r,PhaseInSet,f)$(Yearval(y) > 2021).. ProductionByTechnologyAnnual(y,PhaseInSet,f,r) =g= ProductionByTechnologyAnnual(y-1,PhaseInSet,f,r)*PhaseIn(y)*((SpecifiedAnnualDemand(r,f,y)/SpecifiedAnnualDemand(r,f,y-1))$(SpecifiedAnnualDemand(r,f,y))+1$(not SpecifiedAnnualDemand(r,f,y)));
 
 equation CC5d_PhaseOutUpperLimit(YEAR_FULL,REGION_FULL,TECHNOLOGY,FUEL);
-CC5d_PhaseOutUpperLimit(y,r,PhaseOutSet,f)$(Yearval(y) > %year%).. ProductionByTechnologyAnnual(y,PhaseOutSet,f,r) =l= ProductionByTechnologyAnnual(y-1,PhaseOutSet,f,r)*PhaseOut(y)*((SpecifiedAnnualDemand(r,f,y)/SpecifiedAnnualDemand(r,f,y-1))$(SpecifiedAnnualDemand(r,f,y))+1$(not SpecifiedAnnualDemand(r,f,y)));
+CC5d_PhaseOutUpperLimit(y,r,PhaseOutSet,f)$(Yearval(y) > 2021).. ProductionByTechnologyAnnual(y,PhaseOutSet,f,r) =l= ProductionByTechnologyAnnual(y-1,PhaseOutSet,f,r)*PhaseOut(y)*((SpecifiedAnnualDemand(r,f,y)/SpecifiedAnnualDemand(r,f,y-1))$(SpecifiedAnnualDemand(r,f,y))+1$(not SpecifiedAnnualDemand(r,f,y)));
 
 equation CC5f_AnnualProductionChangeLimit(YEAR_FULL,FUEL);
-CC5f_AnnualProductionChangeLimit(y,f)$(Yearval(y) > %year% and ProductionGrowthLimit(y,f)>0).. sum((t,r)$(RETagTechnology(r,t,y)=1),ProductionByTechnologyAnnual(y,t,f,r)-ProductionByTechnologyAnnual(y-1,t,f,r)) =l= YearlyDifferenceMultiplier(y-1)*ProductionGrowthLimit(y,f)*sum((t,r),ProductionByTechnologyAnnual(y-1,t,f,r))-sum((StorageDummies,r),ProductionByTechnologyAnnual(y-1,StorageDummies,f,r));
+CC5f_AnnualProductionChangeLimit(y,f)$(Yearval(y) > 2021 and ProductionGrowthLimit(y,f)>0).. sum((t,r)$(RETagTechnology(r,t,y)=1),ProductionByTechnologyAnnual(y,t,f,r)-ProductionByTechnologyAnnual(y-1,t,f,r)) =l= YearlyDifferenceMultiplier(y-1)*ProductionGrowthLimit(y,f)*sum((t,r),ProductionByTechnologyAnnual(y-1,t,f,r))-sum((StorageDummies,r),ProductionByTechnologyAnnual(y-1,StorageDummies,f,r));
 
 $ifthen %switch_ccs% == 1
 equation CC5g_CCSAddition(YEAR_FULL,REGION_FULL,FUEL);
-CC5g_CCSAddition(y,r,f)$(Yearval(y) > %year% and not sameas(f,'DAC_Dummy')).. sum(CCS,ProductionByTechnologyAnnual(y,CCS,f,r)-ProductionByTechnologyAnnual(y-1,CCS,f,r)) =l= YearlyDifferenceMultiplier(y-1)*(ProductionGrowthLimit(y,'Air'))*sum((t),ProductionByTechnologyAnnual(y-1,t,f,r));
+CC5g_CCSAddition(y,r,f)$(Yearval(y) > 2021 and not sameas(f,'DAC_Dummy')).. sum(CCS,ProductionByTechnologyAnnual(y,CCS,f,r)-ProductionByTechnologyAnnual(y-1,CCS,f,r)) =l= YearlyDifferenceMultiplier(y-1)*(ProductionGrowthLimit(y,'Air'))*sum((t),ProductionByTechnologyAnnual(y-1,t,f,r));
 
 equation CC5i_CCSLimit(REGION_FULL);
 CC5i_CCSLimit(r)$(sum(rr,RegionalCCSLimit(rr)) > 0)..
@@ -346,7 +347,6 @@ $endif
 
 *equation CC5h_AnnualStorageChangeLimit(YEAR_FULL,REGION_FULL,FUEL);
 *CC5h_AnnualStorageChangeLimit(y,r,f)$(Yearval(y) > %year% and ProductionGrowthLimit(y,f)>0).. sum(StorageDummies,ProductionByTechnologyAnnual(y,StorageDummies,f,r)-ProductionByTechnologyAnnual(y-1,StorageDummies,f,r)) =l= YearlyDifferenceMultiplier(y-1)*(ProductionGrowthLimit(y,f)+StorageLimitOffset)*sum((t),ProductionByTechnologyAnnual(y-1,t,f,r))
-
 $endif
 
 *
@@ -436,6 +436,21 @@ AAC2_TotalAnnualTechnologyActivityUpperLimit(y,t,r)$(TotalTechnologyAnnualActivi
 
 equation AAC3_TotalAnnualTechnologyActivityLowerLimit(YEAR_FULL,TECHNOLOGY,REGION_FULL);
 AAC3_TotalAnnualTechnologyActivityLowerLimit(y,t,r)$(TotalTechnologyAnnualActivityLowerLimit(r,t,y) > 0).. TotalTechnologyAnnualActivity(y,t,r) =g= TotalTechnologyAnnualActivityLowerLimit(r,t,y);
+
+* Annual Activity Lower and Upper Limits for technologies in power sector (Aggregated for all regions) (Added for Guadeloupe)
+* ---------------------------------------------------------------------------------------------------------------------------------
+equation AAC4_AggregatedTotalAnnualTechnologyActivityLowerLimit(YEAR_FULL,TECHNOLOGY);
+    AAC4_AggregatedTotalAnnualTechnologyActivityLowerLimit(y,t)$
+        (sum((r,f),ProductionByTechnologyAnnual.up(y,t,f,r)) > 0 and
+         OverallBaseYearMinActivity(t,y) > 0)..
+    sum((r,f),ProductionByTechnologyAnnual(y,t,f,r)) =g= OverallBaseYearMinActivity(t,y); 
+    
+equation AAC5_AggregatedTotalAnnualTechnologyActivityLowerLimit(YEAR_FULL,TECHNOLOGY);
+    AAC5_AggregatedTotalAnnualTechnologyActivityLowerLimit(y,t)$
+        (sum((r,f),ProductionByTechnologyAnnual.up(y,t,f,r)) > 0 and
+         OverallBaseYearMaxActivity(t,y) <  999999)..
+    sum((r,f),ProductionByTechnologyAnnual(y,t,f,r)) =l= OverallBaseYearMaxActivity(t,y); 
+* --------------------------------------------------------------------------------------------------------------------------------- 
 
 *
 * ################ Total Activity Constraints ##############
