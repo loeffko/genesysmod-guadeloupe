@@ -423,12 +423,12 @@ $endif.dec_ramping
 
 Parameter PhaseOut(YEAR_FULL) this is an upper limit for fossil generation based on the previous year - to remove choose large value
 /        2020    3
-         2025    3
-         2030    3
-         2035    2.5
-         2040    2.5
-         2045    2
-         2050    2
+         2025    2
+         2030    2
+         2035    2
+         2040    1.5
+         2045    1.5
+         2050    1.5
 /
 PhaseIn(YEAR_FULL) this is a lower bound for renewable integration based on the previous year - to remove choose 0
 /        2020    1
@@ -436,8 +436,8 @@ PhaseIn(YEAR_FULL) this is a lower bound for renewable integration based on the 
          2030    0.7
          2035    0.7
          2040    0.7
-         2045    0.6
-         2050    0.5
+         2045    0.7
+         2050    0.7
 /;
 
 

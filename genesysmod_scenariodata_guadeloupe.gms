@@ -30,6 +30,20 @@ CapacityFactor(r,'RES_PV_Rooftop_Commercial',l,y) = CapacityFactor(r,'RES_PV_Uti
 CapacityFactor(r,'RES_PV_Rooftop_Residential',l,y) = CapacityFactor(r,'RES_PV_Utility_Avg',l,y) ;
 CapacityFactor(r,'HLR_Solar_Thermal',l,y) = CapacityFactor(r,'RES_PV_Utility_Avg',l,y) ;
 CapacityFactor(r,'HLI_Solar_Thermal',l,y) = CapacityFactor(r,'RES_PV_Utility_Avg',l,y) ;
+CapacityFactor(r,t,l,y)$(TagTechnologyToSector(t,'Water')) = 1;
+TotalAnnualMaxCapacity(r,t,y)$(TagTechnologyToSector(t,'Water')) = TotalAnnualMaxCapacity('GrandeTerreNorth',t,y);
+TotalAnnualMaxCapacity(r,t,y)$(TagTechnologyToSector(t,'Cooking')) = TotalAnnualMaxCapacity('GrandeTerreNorth',t,y);
+TotalAnnualMaxCapacity(r,t,y)$(TagTechnologyToSector(t,'Resources')) = TotalAnnualMaxCapacity('GrandeTerreNorth',t,y);
+
+equation Add_CookingLimit(r_full,y_full);
+Add_CookingLimit(r,y)$(YearVal(y)>2018).. ProductionByTechnologyAnnual(y,'C_Charcoal_Cookstove','Cooking',r) =l= ProductionByTechnologyAnnual(y-1,'C_Charcoal_Cookstove','Cooking',r);
+
+equation Add_CookingLimit2(r_full,y_full);
+Add_CookingLimit2(r,y)$(YearVal(y)>2018).. ProductionByTechnologyAnnual(y,'C_Open_Firewood','Cooking',r) =l= ProductionByTechnologyAnnual(y-1,'C_Open_Firewood','Cooking',r);
+
+equation Add_CookingLimit3(r_full,y_full);
+Add_CookingLimit3(r,y)$(YearVal(y)>2018).. ProductionByTechnologyAnnual(y,'C_LPG_Cookstove','Cooking',r) =l= ProductionByTechnologyAnnual(y-1,'C_LPG_Cookstove','Cooking',r);
+
 
 AvailabilityFactor(r,'HLI_Geothermal',y) = 0;
 
@@ -133,3 +147,17 @@ AnnualEmissionLimit('CO2','2050')=emission2018*0;
 
 $endif
 
+loop(y,
+SpecifiedAnnualDemand(r,'Water',y)$(YearVal(y)>%year%) = SpecifiedAnnualDemand(r,'Water',y-1)*(1+%demandprogression_water%*YearlyDifferenceMultiplier(y-1));
+);
+
+parameter water_losses(y_full);
+water_losses('2018') = 0.63;
+water_losses('2050') = %losses_water_2050%;
+
+loop(y,
+water_losses(y)$(YearVal(y)>%year% and YearVal(y)<2050) = water_losses(y-1)-(water_losses('2018')-water_losses('2050'))*((YearVal(y)-YearVal(y-1))/32);
+);
+
+
+SpecifiedAnnualDemand(r,'Water',y) = SpecifiedAnnualDemand(r,'Water',y)*(0.37+water_losses(y));

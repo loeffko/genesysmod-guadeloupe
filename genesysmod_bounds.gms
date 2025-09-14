@@ -38,11 +38,11 @@ RETagFuel(r,'Heat_Low_Industrial',y) = 1;
 RETagFuel(r,'Heat_Medium_Industrial',y) = 1;
 RETagFuel(r,'Heat_High_Industrial',y) = 1;
 
-TotalAnnualMaxCapacityInvestment(REGION,TECHNOLOGY,y) = 999999;
+TotalAnnualMaxCapacityInvestment(REGION,TECHNOLOGY,y) = 9999;
 TotalAnnualMinCapacityInvestment(REGION,TECHNOLOGY,y) = 0 ;
-TotalTechnologyModelPeriodActivityUpperLimit(REGION,TECHNOLOGY) = 999999;
+TotalTechnologyModelPeriodActivityUpperLimit(REGION,TECHNOLOGY) = 9999;
 TotalTechnologyModelPeriodActivityLowerLimit(REGION,TECHNOLOGY) = 0;
-TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y)$(TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y) = 0) = 999999;
+TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y)$(TotalTechnologyAnnualActivityUpperLimit(REGION,TECHNOLOGY,y) = 0 and not TagTechnologyToSector(TECHNOLOGY,'Water')) = 999;
 
 * Added for Guadeloupe
 * ------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ TotalTechnologyAnnualActivityUpperLimit('MinorIslands','RES_Residues',y)=0;
 TotalTechnologyAnnualActivityUpperLimit('RivieraDuLevant','RES_Residues',y)=0;
 
 
-OverallBaseYearMaxActivity(TECHNOLOGY,YEAR_FULL)$(OverallBaseYearMaxActivity(TECHNOLOGY,YEAR_FULL) = 0) = 999999;
+OverallBaseYearMaxActivity(TECHNOLOGY,YEAR_FULL)$(OverallBaseYearMaxActivity(TECHNOLOGY,YEAR_FULL) = 0) = 999;
 
 * ------------------------------------------------------------------------------
 
@@ -111,7 +111,7 @@ OutputActivityRatio(REGION,'Infeasibility_Mob_Freight','Mobility_Freight','1',y)
 
 CapacityToActivityUnit(r,DummyTechnology) = 31.56;
 
-TotalAnnualMaxCapacity(r,DummyTechnology,y) = 999999;
+TotalAnnualMaxCapacity(r,DummyTechnology,y) = 99;
 
 FixedCost(r,DummyTechnology,y) = 999;
 CapitalCost(r,DummyTechnology,y) = 999;
@@ -125,20 +125,20 @@ $endif
 *
 * ####### Bounds for non-supply technologies #############
 *
-TotalAnnualMaxCapacity(r,Transformation,y) = 999999;
-TotalAnnualMaxCapacity(r,StorageDummies,y) = 999999;
-TotalAnnualMaxCapacity(r,FossilPower,y) = 999999;
-TotalAnnualMaxCapacity(r,FossilFuelGeneration,y) = 999999;
-TotalAnnualMaxCapacity(r,CHPs,y) = 999999;
-TotalAnnualMaxCapacity(r,Transport,y) = 999999;
-TotalAnnualMaxCapacity(r,ImportTechnology,y) = 999999;
-TotalAnnualMaxCapacity(r,Biomass,y) = 999999;
-TotalAnnualMaxCapacity(r,'P_Biomass',y) = 999999;
+TotalAnnualMaxCapacity(r,Transformation,y) = 99;
+TotalAnnualMaxCapacity(r,StorageDummies,y) = 99;
+TotalAnnualMaxCapacity(r,FossilPower,y) = 99;
+TotalAnnualMaxCapacity(r,FossilFuelGeneration,y) = 99;
+TotalAnnualMaxCapacity(r,CHPs,y) = 99;
+TotalAnnualMaxCapacity(r,Transport,y) = 99;
+TotalAnnualMaxCapacity(r,ImportTechnology,y) = 99;
+TotalAnnualMaxCapacity(r,Biomass,y) = 99;
+TotalAnnualMaxCapacity(r,'P_Biomass',y) = 99;
 
 AvailabilityFactor(r,ImportTechnology,y) = 1;
 CapacityFactor(r,ImportTechnology,l,y) = 1 ;
 OperationalLife(r,ImportTechnology) = 1 ;
-TotalTechnologyModelPeriodActivityUpperLimit(r,ImportTechnology) = 999999;
+TotalTechnologyModelPeriodActivityUpperLimit(r,ImportTechnology) = 99;
 
 
 CapacityToActivityUnit(r,t)$(not CapacityToActivityUnit(r,t)) = 1;
@@ -260,7 +260,7 @@ Curtailment.up(y,l,'Heat_Low_Industrial',r) = 0;
 Curtailment.up(y,l,'Heat_Low_Residential',r) = 0;
 Curtailment.up(y,l,'Heat_District',r) = 1;
 
-AnnualSectoralEmissionLimit(e,se,y)$(not AnnualSectoralEmissionLimit(e,se,y)) = 999999;
+AnnualSectoralEmissionLimit(e,se,y)$(not AnnualSectoralEmissionLimit(e,se,y)) = 99;
 
 *
 * ####### CCS #############
@@ -270,17 +270,17 @@ $ifthen %switch_ccs% == 1
 AvailabilityFactor(r,CCS,y) = 0;
 AvailabilityFactor(r,CCS,y)$(YearVal(y) > 2020 and RegionalCCSLimit(r)) = 0.95;
 
-TotalAnnualMaxCapacity(r,CCS,y) = 99999;
+TotalAnnualMaxCapacity(r,CCS,y) = 99;
 TotalAnnualMaxCapacity(r,CCS,y)$(AvailabilityFactor(r,CCS,y) = 0) = 0;
 
-TotalTechnologyAnnualActivityUpperLimit(r,CCS,y) = 99999;
+TotalTechnologyAnnualActivityUpperLimit(r,CCS,y) = 99;
 TotalTechnologyAnnualActivityUpperLimit(r,CCS,y)$(AvailabilityFactor(r,CCS,y) = 0) = 0;
 
 Productionbytechnologyannual.up(y,CCS,f,r) = +INF;
 Productionbytechnologyannual.fx(y,CCS,f,r)$(AvailabilityFactor(r,CCS,y) = 0) = 0;
 
-TotalAnnualMaxCapacity(r,'A_Air',y) = 99999;
-TotalTechnologyAnnualActivityUpperLimit(r,'A_Air',y) = 99999;
+TotalAnnualMaxCapacity(r,'A_Air',y) = 99;
+TotalTechnologyAnnualActivityUpperLimit(r,'A_Air',y) = 99;
 
 EmissionActivityRatio(r,'X_DAC_HT',e,m,y) = -1;
 EmissionActivityRatio(r,'X_DAC_LT',e,m,y) = -1;

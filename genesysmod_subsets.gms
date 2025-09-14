@@ -383,6 +383,8 @@ ImportTechnology('Z_Import_Oil') = yes;
 ImportTechnology('Z_Import_Gas') = yes;
 ImportTechnology('Z_Import_LNG') = yes;
 ImportTechnology('Z_Import_H2') = yes;
+ImportTechnology('Z_Import_LPG') = yes;
+
 
 set Heat(t);
 Heat(t) = no;
@@ -701,6 +703,8 @@ PhaseInSet('CHP_Gas_CCGT_Natural_CCS') = yes;
 PhaseInSet('CHP_Gas_CCGT_Biogas_CCS') = yes;
 PhaseInSet('CHP_Hydrogen_FuelCell') = yes;
 PhaseInSet(CCS) = yes;
+PhaseInSet('C_Electric_Cookstove') = yes;
+
 
 
 Set PhaseOutSet(t);
@@ -732,6 +736,9 @@ PhaseOutSet('HHI_BF_BOF') = yes;
 PhaseOutSet('CHP_Coal_Hardcoal') = yes;
 PhaseOutSet('CHP_Coal_Lignite') = yes;
 PhaseOutSet('CHP_Oil') = yes;
+PhaseOutSet('C_Open_Firewood') = yes;
+PhaseOutSet('C_Charcoal_Cookstove') = yes;
+PhaseOutSet('C_LPG_Cookstove') = yes;
 
 Set HeatSlowRamper(t);
 HeatSlowRamper(t) = no;

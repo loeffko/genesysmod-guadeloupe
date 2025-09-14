@@ -147,7 +147,7 @@ CanFuelBeProducedInTimeslice(y,l,f,r)$
 
 parameter IgnoreFuel(YEAR_FULL, FUEL, REGION_FULL);
 IgnoreFuel(y,f,r)$
-(CanFuelBeUsedOrDemanded(y,f,r) = 1 and CanFuelBeProduced(y,f,r) = 0) = 1;
+(CanFuelBeUsedOrDemanded(y,f,r) = 0 and CanFuelBeProduced(y,f,r) = 0) = 1;
 
 parameter PureDemandFuel(YEAR_FULL, FUEL, REGION_FULL);
 PureDemandFuel(y,f,r)$
@@ -312,12 +312,12 @@ CC2_DiscountingCapitalInvestmenta(y,t,r).. CapitalInvestment(y,t,r)/((1+Technolo
 * ############### Investment & Capacity Limits #############
 *
 
-* The second period (year 2021) has been removed from all the investment limit equations for Guadeloupe study. 
+* The second period (year 2021) has been removed from all the investment limit equations for Guadeloupe study.
 
 $ifthen %switch_investLimit% == 1
 
 equation CC3_InvestmentLimit(YEAR_FULL);
-CC3_InvestmentLimit(y)$(YearVal(y) > 2021).. sum((t,r),CapitalInvestment(y,t,r)) =l= 1/(smax(yy,Yearval(yy))-smin(yy,YearVal(yy)))*YearlyDifferenceMultiplier(y-1)*InvestmentLimit*sum(yy,sum((t,r),CapitalInvestment(yy,t,r))); 
+CC3_InvestmentLimit(y)$(YearVal(y) > 2021).. sum((t,r),CapitalInvestment(y,t,r)) =l= 1/(smax(yy,Yearval(yy))-smin(yy,YearVal(yy)))*YearlyDifferenceMultiplier(y-1)*InvestmentLimit*sum(yy,sum((t,r),CapitalInvestment(yy,t,r)));
 
 equation CC4_CapacityLimit(YEAR_FULL,REGION_FULL,TECHNOLOGY);
 CC4_CapacityLimit(y,r,Renewables)$(Yearval(y) > 2021).. NewCapacity(y,Renewables,r) =l= YearlyDifferenceMultiplier(y-1)*NewRESCapacity*TotalAnnualMaxCapacity(r,Renewables,y);
@@ -443,14 +443,14 @@ equation AAC4_AggregatedTotalAnnualTechnologyActivityLowerLimit(YEAR_FULL,TECHNO
     AAC4_AggregatedTotalAnnualTechnologyActivityLowerLimit(y,t)$
         (sum((r,f),ProductionByTechnologyAnnual.up(y,t,f,r)) > 0 and
          OverallBaseYearMinActivity(t,y) > 0)..
-    sum((r,f),ProductionByTechnologyAnnual(y,t,f,r)) =g= OverallBaseYearMinActivity(t,y); 
-    
+    sum((r,f),ProductionByTechnologyAnnual(y,t,f,r)) =g= OverallBaseYearMinActivity(t,y);
+
 equation AAC5_AggregatedTotalAnnualTechnologyActivityLowerLimit(YEAR_FULL,TECHNOLOGY);
     AAC5_AggregatedTotalAnnualTechnologyActivityLowerLimit(y,t)$
         (sum((r,f),ProductionByTechnologyAnnual.up(y,t,f,r)) > 0 and
          OverallBaseYearMaxActivity(t,y) <  999999)..
-    sum((r,f),ProductionByTechnologyAnnual(y,t,f,r)) =l= OverallBaseYearMaxActivity(t,y); 
-* --------------------------------------------------------------------------------------------------------------------------------- 
+    sum((r,f),ProductionByTechnologyAnnual(y,t,f,r)) =l= OverallBaseYearMaxActivity(t,y);
+* ---------------------------------------------------------------------------------------------------------------------------------
 
 *
 * ################ Total Activity Constraints ##############
@@ -716,7 +716,7 @@ T2_ProductionOfTechnologyByModalSplit(mt,l,r,TransportFuels,y)$(sum((t,m),TagTec
 equation T3_ModalSplitBalance(MODALTYPE,TIMESLICE_FULL,REGION_FULL,FUEL,YEAR_FULL);
 T3_ModalSplitBalance(mt,l,r,TransportFuels,y)$(sum((t,m),TagTechnologyToModalType(t,m,mt)) <> 0).. ProductionSplitByModalType(mt,l,r,TransportFuels,y) =g= DemandSplitByModalType(mt,l,r,TransportFuels,y);
 
-* Added for Guadeloupe. This constraint has been added to consider a lower limit for PSNG_Road_BEV. As per my last discusstion with Konstantin this could be implemented through input data. 
+* Added for Guadeloupe. This constraint has been added to consider a lower limit for PSNG_Road_BEV. As per my last discusstion with Konstantin this could be implemented through input data.
 equation T4_ModalSplitBalance(Technology,TIMESLICE_FULL,REGION_FULL,FUEL,YEAR_FULL);
 T4_ModalSplitBalance('PSNG_Road_BEV',l,r,TransportFuels,y)$(sum(m,TagTechnologyToModalType('PSNG_Road_BEV',m,'MT_PSNG_ROAD_RE')) <> 0).. sum(m$(OutputActivityRatio(r,'PSNG_Road_BEV',TransportFuels,m,y) <> 0),TagTechnologyToModalType('PSNG_Road_BEV',m,"MT_PSNG_ROAD_RE")*RateOfActivity(y,l,'PSNG_Road_BEV',m,r)*OutputActivityRatio(r,'PSNG_Road_BEV',TransportFuels,m,y)*YearSplit(l,y)) =g= DemandSplitByModalType("MT_PSNG_ROAD_RE",l,r,TransportFuels,y);
 
@@ -734,7 +734,7 @@ ProductionSplitByModalType.fx('MT_PSNG_AIR_CONV',l,r,'Mobility_Freight',y) = 0;
 ProductionSplitByModalType.fx('MT_PSNG_ROAD_CONV',l,r,'Mobility_Freight',y) = 0;
 ProductionSplitByModalType.fx('MT_PSNG_RAIL_CONV',l,r,'Mobility_Freight',y) = 0;
 
-* This constraint eliminate the usage of passenger rail because there is no railway in Guadeloupe. 
+* This constraint eliminate the usage of passenger rail because there is no railway in Guadeloupe.
 ProductionSplitByModalType.fx('MT_PSNG_RAIL',l,r,'Mobility_Passenger',y) = 0;
 
 *$offtext

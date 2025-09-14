@@ -340,8 +340,8 @@ TradeLossBetweenRegions(y,f,r,rr) = TradeLossFactor(y,f)*TradeRoute(y,f,r,rr);
 *
 * ######### Missing in Excel, Overwriten later in scenario data #############
 *
-ModelPeriodEmissionLimit(EMISSION) = 999999;
-RegionalModelPeriodEmissionLimit(EMISSION,REGION_FULL) = 999999;
+ModelPeriodEmissionLimit(EMISSION) = 99;
+RegionalModelPeriodEmissionLimit(EMISSION,REGION_FULL) = 99;
 
 *
 * ######### YearValue assignment #############

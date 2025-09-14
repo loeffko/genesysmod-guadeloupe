@@ -41,7 +41,7 @@ $if not set switch_ramping               $setglobal switch_ramping 0
 $if not set switch_short_term_storage    $setglobal switch_short_term_storage 1
 $if not set switch_all_regions           $setglobal switch_all_regions 1
 $if not set switch_infeasibility_tech    $setglobal switch_infeasibility_tech 1
-$if not set switch_base_year_bounds      $setglobal switch_base_year_bounds 0
+$if not set switch_base_year_bounds      $setglobal switch_base_year_bounds 1
 $if not set switch_only_load_gdx         $setglobal switch_only_load_gdx 0
 $if not set switch_write_output          $setglobal switch_write_output gdx
 $if not set switch_aggregate_region      $setglobal switch_aggregate_region 0
@@ -59,9 +59,9 @@ $if not set switch_peaking_with_storages $setglobal switch_peaking_with_storages
 $if not set switch_peaking_minrun        $setglobal switch_peaking_minrun 1
 $if not set set_peaking_slack            $setglobal set_peaking_slack 1.0
 *consider vRES only partially (1.0 consider vRES fully, 0.0 ignore vRES in peaking equation)
-$if not set set_peaking_res_cf           $setglobal set_peaking_res_cf 0.5
+$if not set set_peaking_res_cf           $setglobal set_peaking_res_cf 0.6
 $if not set set_peaking_min_thermal      $setglobal set_peaking_min_thermal 0
-$if not set set_peaking_startyear        $setglobal set_peaking_startyear 2025
+$if not set set_peaking_startyear        $setglobal set_peaking_startyear 2030
 $if not set set_peaking_minrun_share     $setglobal set_peaking_minrun_share 0.15
 
 $if not set solver                       $setglobal solver cplex
@@ -72,24 +72,27 @@ $if not set global_data_file             $setglobal global_data_file Global_Data
 * CaseI:   Data_Guadeloupe_v04_mb_FreeGlobalLimit_28_12_2023
 * CaseII:  Data_Guadeloupe_v04_mb_Independence2050_28_12_2023
 * CaseIII: Data_Guadeloupe_v04_mb_Independence2040_28_12_2023
-$if not set data_file                    $setglobal data_file Data_Guadeloupe_v04_mb_FreeGlobalLimit_28_12_2023
+$if not set data_file                    $setglobal data_file Data_Guadeloupe_Water_v05_kl_Independence2050_25-07-2025
 $if not set eployment_data_file          $setglobal employment_data_file Employment_v01_06_11_2019
 $if not set hourly_data_file             $setglobal hourly_data_file Hourly_Data_Guadeloupe_v03_kl_30_06_2023
 
-$if not set threads                      $setglobal threads 10
+$if not set threads                      $setglobal threads 4
 $if not set timeseries                   $setglobal timeseries elmod
-$if not set elmod_nthhour                $setglobal elmod_nthhour 73
+$if not set elmod_nthhour                $setglobal elmod_nthhour 122
 $if not set elmod_starthour              $setglobal elmod_starthour 10
 $if not set elmod_dunkelflaute           $setglobal elmod_dunkelflaute 0
 * Other emission pathways (case studies):
 * CaseI:   Free
 * CaseII:  Independence2050
 * CaseIII: Independence2040
-$if not set emissionPathway              $setglobal emissionPathway Free 
+$if not set emissionPathway              $setglobal emissionPathway Independence2050
 $if not set emissionScenario             $setglobal emissionScenario globalLimit
 
 
 $if not set socialdiscountrate           $setglobal socialdiscountrate 0.05
+
+$if not set demandprogression_water      $setglobal demandprogression_water 0
+$if not set losses_water_2050            $setglobal losses_water_2050 0
 
 
 $ifthen %switch_unixPath% == 1
@@ -103,6 +106,8 @@ $if not set gdxdir                       $setglobal gdxdir GdxFiles\
 $if not set tempdir                      $setglobal tempdir TempFiles\
 $if not set resultdir                    $setglobal resultdir Results\
 $endif
+
+
 
 option dnlp = conopt;
 

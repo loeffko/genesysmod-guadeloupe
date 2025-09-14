@@ -28,6 +28,7 @@ error_ModalSplitByModalTypeDefinition3 = sum((f,r,y),error_ModalSplitByModalType
 error_ModalSplitByModalTypeDefinition4(f,'Error in ModalGroup',r,y) = round(sum(ModalGroups,ModalSplitByFuelAndModalType(r,f,y,ModalGroups)),4);
 error_ModalSplitByModalTypeDefinition5(f,'Error in SubGroup',r,y) = round(sum(mt$(not sum(ModalGroups,diag(mt,ModalGroups))),ModalSplitByFuelAndModalType(r,f,y,mt)),4)
 
+
 display error_ModalSplitByModalTypeDefinition,error_ModalSplitByModalTypeDefinition2, error_ModalSplitByModalTypeDefinition3,
 error_ModalSplitByModalTypeDefinition4, error_ModalSplitByModalTypeDefinition5, mt, ModalGroups, ModalSplitByFuelAndModalType;
 
