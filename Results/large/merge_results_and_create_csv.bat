@@ -1,5 +1,5 @@
 echo Step 1: merge gdx files
-gdxmerge *.gdx id=output_energy_balance,output_emissions,output_capacity,output_trade_capacity,output_energy_balance_annual,output_other,output_energydemandstatistics,output_technology_costs_detailed,output_fuelcosts
+gdxmerge *.gdx id=output_energy_balance,output_emissions,output_capacity,output_trade_capacity,output_energy_balance_annual,output_other,output_energydemandstatistics,output_technology_costs_detailed,output_fuelcosts,z
 
 echo Step 2: create energy balance csv
 echo Model Version,Region,Sector,Technology,Mode,Fuel,Timeslice,Type,Unit,PathwayScenario,Year,Value > output_production.csv
@@ -36,5 +36,9 @@ gdxdump merged.gdx symb=output_technology_costs_detailed format=csv noHeader >> 
 echo Step 8: create endogenous fuel cost data csv
 echo Model Version,Unit,Region,Fuel,Year,Value > output_endogenous_fuelcosts.csv
 gdxdump merged.gdx symb=output_fuelcosts format=csv noHeader >> output_endogenous_fuelcosts.csv
+
+echo Step 9: create objective value csv
+echo Model Version,Value > output_objvalue.csv
+gdxdump merged.gdx symb=z format=csv noHeader >> output_objvalue.csv
 
 pause

@@ -68,7 +68,8 @@ set TECHNOLOGY /Infeasibility_Power,
                 Infeasibility_HHI,
                 Infeasibility_HLR,
                 Infeasibility_Mob_Passenger,
-                Infeasibility_Mob_Freight /;
+                Infeasibility_Mob_Freight,
+                Infeasibility_Water /;
 alias (t,TECHNOLOGY);
 
 set DummyTechnology(TECHNOLOGY);

@@ -95,6 +95,7 @@ DummyTechnology('Infeasibility_HLR') = yes;
 DummyTechnology('Infeasibility_Power') = yes;
 DummyTechnology('Infeasibility_Mob_Passenger') = yes;
 DummyTechnology('Infeasibility_Mob_Freight') = yes;
+DummyTechnology('Infeasibility_Water') = yes;
 TagTechnologyToSector(DummyTechnology,'Infeasibility') = 1;
 
 AvailabilityFactor(r,DummyTechnology,y) = 0;
@@ -107,6 +108,7 @@ OutputActivityRatio(REGION,'Infeasibility_HLR','Heat_Low_Residential','1',y) = 1
 OutputActivityRatio(REGION,'Infeasibility_Power','Power','1',y) = 1;
 OutputActivityRatio(REGION,'Infeasibility_Mob_Passenger','Mobility_Passenger','1',y) = 1 ;
 OutputActivityRatio(REGION,'Infeasibility_Mob_Freight','Mobility_Freight','1',y) = 1 ;
+OutputActivityRatio(REGION,'Infeasibility_Water','Water','1',y) = 1 ;
 
 
 CapacityToActivityUnit(r,DummyTechnology) = 31.56;

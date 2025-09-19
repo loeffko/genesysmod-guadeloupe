@@ -161,3 +161,5 @@ water_losses(y)$(YearVal(y)>%year% and YearVal(y)<2050) = water_losses(y-1)-(wat
 
 
 SpecifiedAnnualDemand(r,'Water',y) = SpecifiedAnnualDemand(r,'Water',y)*(0.37+water_losses(y));
+
+ProductionByTechnologyAnnual.fx(y,'X_Fuel_cell',f,r) = 0;
