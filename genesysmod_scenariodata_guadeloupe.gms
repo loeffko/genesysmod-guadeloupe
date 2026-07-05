@@ -163,3 +163,4 @@ water_losses(y)$(YearVal(y)>%year% and YearVal(y)<2050) = water_losses(y-1)-(wat
 SpecifiedAnnualDemand(r,'Water',y) = SpecifiedAnnualDemand(r,'Water',y)*(0.37+water_losses(y));
 
 ProductionByTechnologyAnnual.fx(y,'X_Fuel_cell',f,r) = 0;
+TotalTechnologyAnnualActivityUpperLimit(r,t,y)$(TagTechnologyToSector(t,'Water') and not sameas(t,'W_Desalination') and YearVal(y)>2021) = TotalTechnologyAnnualActivityUpperLimit(r,t,y)*(1-%supplyreduction_water_2050%*(YearVal(y)-2021)/29)

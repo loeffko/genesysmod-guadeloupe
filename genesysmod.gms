@@ -92,7 +92,8 @@ $if not set emissionScenario             $setglobal emissionScenario globalLimit
 $if not set socialdiscountrate           $setglobal socialdiscountrate 0.05
 
 $if not set demandprogression_water      $setglobal demandprogression_water 0
-$if not set losses_water_2050            $setglobal losses_water_2050 0
+$if not set losses_water_2050            $setglobal losses_water_2050 0.6
+$if not set supplyreduction_water_2050   $setglobal supplyreduction_water_2050 0.2
 
 
 $ifthen %switch_unixPath% == 1
